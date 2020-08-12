@@ -3,6 +3,8 @@ const app = express()
 const dotenv = require("dotenv")
 const cors = require('cors')
 const bodyParser = require('body-parser');
+const mongoose = require("mongoose")
+const keys = require("./config/keys")
 dotenv.config()
 app.use(cors())
 
@@ -10,9 +12,17 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+// qLcr83GSS8HsaYwr
+
 // import routes
 const apiRoute = require("./routes/api")
 
+mongoose.connect(keys.MONGOURI,{
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+mongoose.connection.on('connected',()=>{console.log("db Connected")})
+mongoose.connection.on('error',(err)=>{console.log("sho some error", err)})
 // set routes
 
 // api route
