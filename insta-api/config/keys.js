@@ -1,5 +1,8 @@
+const dotenv = require("dotenv")
+dotenv.config()
+
 let keys = {
-    MONGOURI : "mongodb+srv://dukandari:qLcr83GSS8HsaYwr@cluster0.sdmel.mongodb.net/<dbname>?retryWrites=true&w=majority"
+    MONGOURI : process.env.MONGOURI
 }
 
 module.exports = keys
