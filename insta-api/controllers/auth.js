@@ -10,17 +10,17 @@ auth.signup = (req, res) => {
     try {
         const { name, username, email, password } = req.body
         if (!name || !username || !email || !password) {
-            return res.status(422).json({ error: true, msg: "All Fields are require" })
+            return res.status(422).json({ error: true, message: "All Fields are require" })
         }
         User.findOne({ email: email })
             .then((emailId) => {
                 if (emailId) {
-                    return res.status(422).json({ error: true, msg: "This email is allready taken" })
+                    return res.status(422).json({ error: true, message: "This email is allready taken" })
                 }
                 User.findOne({ username: username })
                     .then((userName) => {
                         if (userName) {
-                            return res.status(422).json({ error: true, msg: "This Username is allready taken" })
+                            return res.status(422).json({ error: true, message: "This Username is allready taken" })
                         }
 
                         const salt = bcrypt.genSaltSync(parseInt(process.env.SALT_Rounds));
@@ -34,18 +34,18 @@ auth.signup = (req, res) => {
 
                         user.save()
                             .then((user) => {
-                                return res.status(200).json({ error: false, msg: "Signup Success", data: user })
+                                return res.status(200).json({ error: false, message: "Signup Success", data: user })
                             })
                             .catch((error) => {
-                                return res.status(422).json({ error: true, msg: error.message })
+                                return res.status(422).json({ error: true, message: error.message })
                             })
                     })
                     .catch((error) => {
-                        res.status(500).json({ error: true, msg: error.message })
+                        res.status(500).json({ error: true, message: error.message })
                     })
             })
             .catch((error) => {
-                res.status(500).json({ error: true, msg: error.message })
+                res.status(500).json({ error: true, message: error.message })
             })
 
     } catch (error) {
@@ -58,7 +58,30 @@ auth.signup = (req, res) => {
 
 auth.signin = (req, res) => {
     try {
-        res.json({ msg: "sign in route" })
+        const { username, password } = req.body
+
+        if(!username, !password){
+            return res.status(422).json({ error: true, message: "All Fields are require" })
+        }
+
+        User.findOne({username:username})
+        .then((user)=>{
+            // console.log(user);
+            // console.log(Object.keys(user).length);
+            if(user === null){
+                return res.status(422).json({error: true, message:"No User Found Please Sign Up or Wrong Username"})
+            }
+            const isPassword = bcrypt.compareSync(password, user.password); 
+            if(isPassword){
+                return res.status(200).json({error : false, message: "Signin Success"})
+            }else{
+                return res.status(422).json({error: true, message:"Wrong Password"})
+            }
+            
+        })
+        .catch((error)=>{
+            return res.status(422).json({error: true, message:error.message})
+        })
     } catch (error) {
         res.status(500).json({
             err: true,
