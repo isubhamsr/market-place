@@ -1,6 +1,7 @@
 const mongoose = require("mongoose")
 const bcrypt = require('bcrypt');
 const dotenv = require("dotenv")
+const jwt = require("jsonwebtoken")
 dotenv.config()
 const User = mongoose.model("User")
 
@@ -34,7 +35,13 @@ auth.signup = (req, res) => {
 
                         user.save()
                             .then((user) => {
-                                return res.status(200).json({ error: false, message: "Signup Success", data: user })
+                                const token = jwt.sign({ 
+                                    user_id : user._id,
+                                    user_name : user.name,
+                                    user_username : user.username,
+                                    user_email : user.email
+                                 }, process.env.SUPER_SECRET_KEY);
+                                return res.status(200).json({ error: false, message: "Signup Success", token: token })
                             })
                             .catch((error) => {
                                 return res.status(422).json({ error: true, message: error.message })
@@ -73,7 +80,13 @@ auth.signin = (req, res) => {
             }
             const isPassword = bcrypt.compareSync(password, user.password); 
             if(isPassword){
-                return res.status(200).json({error : false, message: "Signin Success"})
+                const token = jwt.sign({ 
+                    user_id : user._id,
+                    user_name : user.name,
+                    user_username : user.username,
+                    user_email : user.email
+                 }, process.env.SUPER_SECRET_KEY);
+                return res.status(200).json({error : false, message: "Signin Success", token: token})
             }else{
                 return res.status(422).json({error: true, message:"Wrong Password"})
             }
