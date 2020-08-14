@@ -104,4 +104,8 @@ auth.signin = (req, res) => {
 
 }
 
+auth.protected = (req,res) =>{
+    res.send("protected")
+}
+
 module.exports = auth;
