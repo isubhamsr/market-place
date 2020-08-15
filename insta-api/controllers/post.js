@@ -1,13 +1,44 @@
+const mongoose = require("mongoose")
+const Post = mongoose.model("Post")
+
 let posts = {}
 
-posts.posts = (req, res) => {
+posts.createPosts = (req, res) => {
     try {
+        const { post_title, post_description, post_image } = req.body
 
-        res.json({ msg: "post route" })
+        if (!post_title || !post_description) {
+            return res.status(422).json({ error: true, message: "All Fields are require" })
+        }
+        console.log(req.user);
+        try {
+            const post = new Post({
+                post_title: post_title,
+                post_description: post_description,
+                posted_by: req.user.user_id
+            })
+
+            post.save()
+                .then((post) => {
+                    return res.status(200).json({ error: false, msg: "Post Successfull", data: post })
+                })
+                .catch((error) => {
+                    res.status(500).json({
+                        error: true,
+                        message: error.message
+                    })
+                 })
+
+        } catch (error) {
+            res.status(500).json({
+                error: true,
+                message: error.message
+            })
+        }
     } catch (error) {
         res.status(500).json({
-            err: true,
-            message: err.message
+            error: true,
+            message: error.message
         })
     }
 }

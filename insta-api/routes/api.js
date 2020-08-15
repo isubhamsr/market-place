@@ -10,6 +10,6 @@ router.post("/protected",middlewares.verifyUser,auth.protected)
 
 router.get("/user",user.user)
 
-router.get("/post",post.posts)
+router.post("/createpost",middlewares.verifyUser,post.createPosts)
 
 module.exports = router;
