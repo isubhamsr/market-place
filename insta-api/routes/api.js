@@ -11,5 +11,6 @@ router.post("/protected",middlewares.verifyUser,auth.protected)
 router.get("/user",user.user)
 
 router.post("/createpost",middlewares.verifyUser,post.createPosts)
+router.get("/fetchallpost",middlewares.verifyUser,post.fetchAllPosts)
 
 module.exports = router;

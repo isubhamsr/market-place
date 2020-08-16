@@ -23,20 +23,45 @@ posts.createPosts = (req, res) => {
                     return res.status(200).json({ error: false, msg: "Post Successfull", data: post })
                 })
                 .catch((error) => {
-                    res.status(500).json({
+                    return res.status(500).json({
                         error: true,
                         message: error.message
                     })
                  })
 
         } catch (error) {
-            res.status(500).json({
+            return res.status(500).json({
                 error: true,
                 message: error.message
             })
         }
     } catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
+            error: true,
+            message: error.message
+        })
+    }
+}
+
+posts.fetchAllPosts = (req,res)=>{
+    try {
+        Post.find()
+        .populate("posted_by", "_id username")
+        .then((posts)=>{
+            return res.status(200).json({
+                error: false,
+                message: "Fetch Posts",
+                posts : posts
+            })
+        })
+        .catch((error)=>{
+            return res.status(500).json({
+                error: true,
+                message: error.message
+            })
+        })
+    } catch (error) {
+        return res.status(500).json({
             error: true,
             message: error.message
         })
