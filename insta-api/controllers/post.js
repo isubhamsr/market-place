@@ -68,4 +68,31 @@ posts.fetchAllPosts = (req,res)=>{
     }
 }
 
+posts.signUserPost = (req, res)=>{
+    try {
+        Post.find({posted_by:req.user.user_id})
+        .then((posts)=>{
+            if(posts.length === 0){
+                return res.status(422).json({ error: true, message: "No Posts are Created by This User" })
+            }
+            return res.status(200).json({
+                error : false,
+                message : "Posts are Fetched",
+                posts : posts
+            })
+        })
+        .catch((error)=>{
+            return res.status(500).json({
+                error: true,
+                message: error.message
+            })
+        })
+    } catch (error) {
+        return res.status(500).json({
+            error: true,
+            message: error.message
+        })
+    }
+}
+
 module.exports = posts;
