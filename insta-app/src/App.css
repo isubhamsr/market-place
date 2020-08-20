@@ -351,7 +351,7 @@ text-align: center;
   margin: 0px 6px 0px 0px;
 }
 
-.description-body {
+.post-description div:nth-child(2){
   display: inline;
   margin:0px 6px 0px 0px;
 }
@@ -491,6 +491,11 @@ text-align: center;
 .profile-stat-count,
 .profile-edit-btn {
   font-weight: 600;
+}
+
+.profile-stats-ul{
+  padding: 0;
+  margin-top: 10px;
 }
 
 /* Gallery Section */
