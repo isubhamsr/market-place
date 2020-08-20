@@ -18,7 +18,20 @@ export default function CustomLayout(props) {
                                 <Link class="nav-link active" aria-current="page" to="/signin">Sign In</Link>
                             </li>
                             <li class="nav-item">
-                                <Link class="nav-link" to="/profile">Profile</Link>
+                                {/* <Link class="nav-link" to="/profile">Profile</Link>
+
+                                <div class="dropdown float-right"> */}
+                                <button class="btn btn-flat btn-flat-icon" type="button" data-toggle="dropdown" aria-expanded="false">
+                                        <div class="d-flex mr-3">
+                                            <a href=""><img class="img-fluid rounded-circle" height={30} width={30} src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/4.jpg" alt="User" /></a>
+                                        </div>
+                                </button>
+                                <div class="dropdown-menu dropdown-scale dropdown-menu-right" role="menu">
+                                    <Link class="dropdown-item" to="/profile">Profile</Link>
+                                    <Link class="dropdown-item" href="#">Logout</Link>
+                                </div>
+                                {/* </div> */}
+
                             </li>
                         </ul>
                     </div>
