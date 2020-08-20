@@ -340,6 +340,22 @@ text-align: center;
   margin: 5px 15px 5px 15px;
 }
 
+.post-description{
+  /* display: inline; */
+  padding: 15px 15px 20px 15px;
+  border-bottom: 2px solid #f4f4f4;
+}
+
+.post-username{
+  display: inline;
+  margin: 0px 6px 0px 0px;
+}
+
+.description-body {
+  display: inline;
+  margin:0px 6px 0px 0px;
+}
+
 
 /* ------------------------------- */
 /* Author

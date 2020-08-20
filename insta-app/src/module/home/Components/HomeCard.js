@@ -98,6 +98,7 @@
 
 
 import React from 'react'
+import ShowMoreText from 'react-show-more-text';
 
 export default function HomeCard() {
   return (
@@ -149,6 +150,26 @@ export default function HomeCard() {
                   <li><a><span>242 Likes</span></a></li>
                 </ul>
               </div>
+              <div className="post-description">
+                <div className="post-username">
+                  <b>isubhamsr : </b>
+                </div>
+                <div className="description-body">
+                <ShowMoreText
+                lines={2}
+                more='Show more'
+                less='Show less'
+                anchorClass='ok'
+                // onClick={this.executeOnClick}
+                expanded={false}
+                // width={280}
+            >
+                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ex elit, tristique vitae turpis ac, pellentesque iaculis libero. In accumsan velit sit amet nisi tempor, ac ornare arcu convallis. Praesent volutpat magna nec dui egestas, sit amet aliquet felis semper. Fusce lacinia turpis a pharetra commodo. Vestibulum ac purus in sapien vulputate vestibulum vitae nec tortor. Morbi ultricies, nisi at facilisis feugiat, nulla metus faucibus quam, at consectetur nunc orci quis nisi. Etiam ullamcorper elementum elit sit amet iaculis. Ut eget lacus vestibulum, vehicula eros sit amet, condimentum est. Aliquam finibus lacus non tristique fringilla. Vivamus lacinia, nulla eget vulputate volutpat, ex nisi pellentesque mi, vel mattis tortor sapien ut massa. Phasellus sit amet lacus volutpat, bibendum dui at, facilisis est. Integer rutrum orci vitae augue dictum dictum. Ut et mauris magna. Morbi elementum scelerisque mi vel luctus.
+
+Aenean magna turpis, tristique id varius vitae, ultricies non sem. Mauris quis magna a quam maximus pretium in a felis. Cras viverra, lectus ac ullamcorper maximus, eros nulla finibus mi, finibus finibus felis dolor in velit. Mauris commodo lorem ac rhoncus condimentum. Suspendisse imperdiet malesuada augue at auctor. Nullam mattis nulla et velit egestas, congue porta elit pharetra. Phasellus sed bibendum nulla.
+</ShowMoreText>
+                </div>
+              </div>
               <div className="user-comments">
                 <span><b>Subham</b>: Hello</span>
                 <span><b>Subham</b>: Hello</span>
@@ -156,10 +177,10 @@ export default function HomeCard() {
                 <span><b>Subham</b>: Hello</span>
               </div>
               <div class="cardbox-comments">
-              <div>
-                <span class="comment-avatar">
-                  <a href=""><img class="rounded-circle" src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/6.jpg" alt="..." /></a>
-                </span>
+                <div>
+                  <span class="comment-avatar">
+                    <a href=""><img class="rounded-circle" src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/6.jpg" alt="..." /></a>
+                  </span>
                 </div>
                 <div class="search">
                   <input placeholder="Write a comment" type="text" />
