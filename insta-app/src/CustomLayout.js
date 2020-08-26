@@ -9,17 +9,16 @@ export default function CustomLayout(props) {
 
     useEffect(() => {
         const token = localStorage.getItem('token')
-
+        
         if (token != null) {
             setToken(token)
         }
-    }, [])
+    })
 
     const logout = () => {
         localStorage.removeItem('token')
         setLogout(true)
         setToken(null)
-        return <Redirect to='/signin' />
     }
 
     return (

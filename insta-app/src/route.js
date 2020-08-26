@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Route } from 'react-router-dom'
 import CustomForm from './module/auth/Containers/CustomForm'
 import CustomHome from './module/home/Container/CustomHome'
@@ -13,7 +13,7 @@ export default function BaseRoute() {
             <Route path="/signin" component={() => (<CustomForm page="signin" />)} />
             <Route path="/signup" component={() => (<CustomForm page="signup" />)} />
             <Route path="/profile" component={CustomProfile} />
-            <Route path="/create" component={ () => (<CustomPost create_post="createpost" />)} />
+            <Route path="/create" component={CustomPost} />
         </div>
     )
 }

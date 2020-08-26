@@ -7,20 +7,21 @@ posts.createPosts = (req, res) => {
     try {
         const { post_title, post_description, post_image } = req.body
 
-        if (!post_title || !post_description) {
+        if (!post_description) {
             return res.status(422).json({ error: true, message: "All Fields are require" })
         }
-        console.log(req.user);
+        // console.log(req.user);
         try {
             const post = new Post({
-                post_title: post_title,
+                // post_title: post_title,
+                post_image: post_image,
                 post_description: post_description,
                 posted_by: req.user.user_id
             })
 
             post.save()
                 .then((post) => {
-                    return res.status(200).json({ error: false, msg: "Post Successfull", data: post })
+                    return res.status(200).json({ error: false, message: "Post Successfull", data: post })
                 })
                 .catch((error) => {
                     return res.status(500).json({

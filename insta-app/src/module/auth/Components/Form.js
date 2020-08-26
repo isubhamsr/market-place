@@ -12,7 +12,8 @@ export default function Form(props) {
     const [message, setMessage] = useState(null)
     const [error, setError] = useState(false)
     const [token, setToken] = useState(null)
-    const [redirect, setRedirect] = useState(false)
+    const [redirectHome, setRedirectHome] = useState(false)
+    const [redirectLogin, setRedirectLogin] = useState(false)
     const [isLogin, setIsLogin] = useState(false)
 
     useEffect(()=>{
@@ -41,6 +42,7 @@ export default function Form(props) {
                         if (response.data.error === false) {
                             setMessage(response.data.message)
                             setError(response.data.error)
+                            setRedirectLogin(true)
                         } else {
                             setMessage(response.data.message)
                             setError(response.data.error)
@@ -91,7 +93,7 @@ export default function Form(props) {
                             setError(response.data.error)
                             const token = response.data.token
                             localStorage.setItem('token', token)
-                            setRedirect(true)
+                            setRedirectHome(true)
                         } else {
                             setMessage(response.data.message)
                             setError(response.data.error)
@@ -112,12 +114,16 @@ export default function Form(props) {
         }
     }
 
-    if(redirect){
+    if(redirectHome){
         return (<Redirect to='/'/>)
     }
 
     if(isLogin){
         return (<Redirect to='/'/>)
+    }
+
+    if(redirectLogin){
+        return (<Redirect to='/signin'/>)
     }
 
     return (
@@ -153,25 +159,6 @@ export default function Form(props) {
                             :
                             null
                     }
-
-                    {
-                        props.create_post === "createpost" ?
-                            <React.Fragment>
-                                <div class="form-file mb-3">
-                                    <input type="file" class="form-file-input" id="customFile" />
-                                    <label class="form-file-label" for="customFile">
-                                        <span class="form-file-text">Upload Photo</span>
-                                        <span class="form-file-button">Browse</span>
-                                    </label>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="exampleFormControlTextarea1" class="form-label">Description</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
-                                </div>
-                            </React.Fragment>
-                            : null
-                    }
-
                     {
                         props.page === "signin" || props.page === "signup" ?
                             <React.Fragment>
@@ -187,9 +174,9 @@ export default function Form(props) {
                             : null
                     }
                     {
-                        props.page === "signup" || props.create_post === "createpost" ?
-                            <button href="#" class="btn btn-primary" onClick={props.page === "signup" ? signup : props.create_post === "createpost" ? createpost : null}>
-                                {props.create_post === "createpost" ? "Upload" : "Register"}
+                        props.page === "signup"  ?
+                            <button href="#" class="btn btn-primary" onClick={signup}>
+                                Register
                             </button>
                             :
                             props.page === "signin" ?
