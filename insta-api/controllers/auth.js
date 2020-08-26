@@ -44,21 +44,21 @@ auth.signup = (req, res) => {
                                 return res.status(200).json({ error: false, message: "Signup Success", token: token })
                             })
                             .catch((error) => {
-                                return res.status(422).json({ error: true, message: error.message })
+                                return res.status(422).json({ error: true, message: "Internal Server Error, Please Try Again" })
                             })
                     })
                     .catch((error) => {
-                        res.status(500).json({ error: true, message: error.message })
+                        res.status(500).json({ error: true, message: "Internal Server Error, Please Try Again" })
                     })
             })
             .catch((error) => {
-                res.status(500).json({ error: true, message: error.message })
+                res.status(500).json({ error: true, message: "Internal Server Error, Please Try Again" })
             })
 
     } catch (error) {
         res.status(500).json({
             err: true,
-            message: err.message
+            message: "Internal Server Error, Please Try Again"
         })
     }
 }
@@ -93,12 +93,12 @@ auth.signin = (req, res) => {
             
         })
         .catch((error)=>{
-            return res.status(422).json({error: true, message:error.message})
+            return res.status(422).json({error: true, message:"Internal Server Error, Please Try Again"})
         })
     } catch (error) {
         res.status(500).json({
             err: true,
-            message: err.message
+            message: "Internal Server Error, Please Try Again"
         })
     }
 

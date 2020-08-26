@@ -1,7 +1,27 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, Redirect, NavLink, useHistory } from 'react-router-dom'
 
 export default function CustomLayout(props) {
+
+    const [token, setToken] = useState(null)
+    const [log_out, setLogout] = useState(false)
+    const [isLogin, setIsLogin] = useState(false)
+
+    useEffect(() => {
+        const token = localStorage.getItem('token')
+
+        if (token != null) {
+            setToken(token)
+        }
+    }, [])
+
+    const logout = () => {
+        localStorage.removeItem('token')
+        setLogout(true)
+        setToken(null)
+        return <Redirect to='/signin' />
+    }
+
     return (
         <React.Fragment>
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -14,25 +34,38 @@ export default function CustomLayout(props) {
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <Link class="nav-link active" aria-current="page" to="/signin">Sign In</Link>
-                            </li>
-                            <li class="nav-item">
-                                {/* <Link class="nav-link" to="/profile">Profile</Link>
+                            {/* {
+                                isLogin ?
+                                    <li class="nav-item">
+                                        <Link class="nav-link active" aria-current="page" to="/signin">Sign In</Link>
+                                    </li>
+                                    : null
+                            } */}
+
+                            {
+                                token === null ?
+                                    <li class="nav-item">
+                                        <Link class="nav-link active" aria-current="page" to="/signin">Sign In</Link>
+                                    </li>
+                                    :
+
+                                    <li class="nav-item">
+                                        {/* <Link class="nav-link" to="/profile">Profile</Link>
 
                                 <div class="dropdown float-right"> */}
-                                <button class="btn btn-flat btn-flat-icon" type="button" data-toggle="dropdown" aria-expanded="false">
-                                        <div class="d-flex mr-3">
-                                            <a href=""><img class="img-fluid rounded-circle" height={30} width={30} src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/4.jpg" alt="User" /></a>
+                                        <button class="btn btn-flat btn-flat-icon" type="button" data-toggle="dropdown" aria-expanded="false">
+                                            <div class="d-flex mr-3">
+                                                <a href=""><img class="img-fluid rounded-circle" height={30} width={30} src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/4.jpg" alt="User" /></a>
+                                            </div>
+                                        </button>
+                                        <div class="dropdown-menu dropdown-scale dropdown-menu-right" role="menu">
+                                            <Link class="dropdown-item" to="/profile">Profile</Link>
+                                            <button class="dropdown-item" onClick={logout}>Logout</button>
                                         </div>
-                                </button>
-                                <div class="dropdown-menu dropdown-scale dropdown-menu-right" role="menu">
-                                    <Link class="dropdown-item" to="/profile">Profile</Link>
-                                    <Link class="dropdown-item" href="#">Logout</Link>
-                                </div>
-                                {/* </div> */}
+                                        {/* </div> */}
 
-                            </li>
+                                    </li>
+                            }
                         </ul>
                     </div>
                 </div>
