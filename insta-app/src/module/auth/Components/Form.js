@@ -128,7 +128,7 @@ export default function Form(props) {
 
     return (
         <section className="auth-card">
-            <div class="card">
+            <div class="card mb-4">
                 <div class="card-body">
                     <h5 class="card-title">
                         {
