@@ -3,21 +3,22 @@ import { BrowserRouter } from 'react-router-dom'
 import './App.css';
 import CustomLayout from './CustomLayout';
 import BaseRoute from './route';
-import { initState, userReducer } from './reducers/userReducer'
+import { initState, userReducer, userSignupDemo } from './context/reducers/userReducer'
 
-export const UserContex = createContext()
+export const GlobalContex = createContext()
 
 
 function App() {
   const [state, dispatch] = useReducer(userReducer, initState)
+  const [signupState, signupdispatch] = useReducer(userSignupDemo, initState)
   return (
-    <UserContex.Provider value={{state, dispatch}}>
+    <GlobalContex.Provider value={{state, dispatch, signupState, signupdispatch}}>
     <BrowserRouter>
       <CustomLayout>
         <BaseRoute />
       </CustomLayout>
     </BrowserRouter>
-    </UserContex.Provider>
+    </GlobalContex.Provider>
   );
 }
 

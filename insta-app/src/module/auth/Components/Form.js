@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { NavLink, Redirect } from 'react-router-dom'
-import { UserContex } from '../../../App'
+import { GlobalContex } from '../../../App'
 import axios from 'axios'
 
 export default function Form(props) {
-    const {state, dispatch} = useContext(UserContex)
+    const {state, dispatch, signupState, signupdispatch} = useContext(GlobalContex)
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -44,6 +44,7 @@ export default function Form(props) {
                             setMessage(response.data.message)
                             setError(response.data.error)
                             setRedirectLogin(true)
+                            signupdispatch({type:"USER_SIGNUP", payload: "Signup"})
                         } else {
                             setMessage(response.data.message)
                             setError(response.data.error)
@@ -86,7 +87,7 @@ export default function Form(props) {
                             const token = response.data.token
                             localStorage.setItem('token', token)
                             setRedirectHome(true)
-                            dispatch({type:"USER", payload: response.data.token})
+                            dispatch({type:"USER_SIGNIN", payload: response.data.token})
                         } else {
                             setMessage(response.data.message)
                             setError(response.data.error)
