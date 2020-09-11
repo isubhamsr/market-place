@@ -42,7 +42,7 @@ export default function CustomLayout(props) {
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
                     <Link class="navbar-brand" to="/">
-                        <span class="navbar-brand mb-0 h1">Navbar</span>
+                        <span class="navbar-brand mb-0 h1">Instagram</span>
                     </Link>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
