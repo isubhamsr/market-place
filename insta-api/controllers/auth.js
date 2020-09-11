@@ -13,6 +13,7 @@ auth.signup = (req, res) => {
         if (!name || !username || !email || !password) {
             return res.status(422).json({ error: true, message: "All Fields are require" })
         }
+        
         User.findOne({ email: email })
             .then((emailId) => {
                 if (emailId) {
