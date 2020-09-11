@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { NavLink, Redirect } from 'react-router-dom'
+import { UserContex } from '../../../App'
 import axios from 'axios'
 
 export default function Form(props) {
-
+    const {state, dispatch} = useContext(UserContex)
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -63,15 +64,6 @@ export default function Form(props) {
         }
     }
 
-    const createpost = () => {
-        const data = {}
-
-        data.description = description
-
-        console.log(data);
-
-    }
-
     const login = () => {
 
         try {
@@ -94,6 +86,7 @@ export default function Form(props) {
                             const token = response.data.token
                             localStorage.setItem('token', token)
                             setRedirectHome(true)
+                            dispatch({type:"USER", payload: response.data.token})
                         } else {
                             setMessage(response.data.message)
                             setError(response.data.error)

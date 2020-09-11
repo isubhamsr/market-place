@@ -1,17 +1,32 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { Link, Redirect, NavLink, useHistory } from 'react-router-dom'
+import { UserContex } from './App'
 
 export default function CustomLayout(props) {
 
     const [token, setToken] = useState(null)
     const [log_out, setLogout] = useState(false)
     const [isLogin, setIsLogin] = useState(false)
+    const {state, dispatch} = useContext(UserContex)
+    console.log(state);
+    // console.log(dispatch);
+    const history = useHistory()
 
     useEffect(() => {
-        const token = localStorage.getItem('token')
-        
+        const token = localStorage.getItem("token")
+
         if (token != null) {
             setToken(token)
+        }
+
+        if (state !== null) {
+            setIsLogin(state)
+        }
+
+        // console.log(state);
+
+        if(log_out){
+            history.push('/signin')
         }
     })
 
@@ -20,6 +35,7 @@ export default function CustomLayout(props) {
         setLogout(true)
         setToken(null)
     }
+
 
     return (
         <React.Fragment>
@@ -42,7 +58,7 @@ export default function CustomLayout(props) {
                             } */}
 
                             {
-                                token === null ?
+                                token === null && !isLogin ?
                                     <li class="nav-item">
                                         <Link class="nav-link active" aria-current="page" to="/signin">Sign In</Link>
                                     </li>
