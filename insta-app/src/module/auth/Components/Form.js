@@ -2,10 +2,11 @@ import React, { useState, useEffect, useContext } from 'react'
 import { NavLink, Redirect } from 'react-router-dom'
 import { GlobalContext } from '../../../context/Provider'
 import { USER_SIGNIN, USER_SIGNUP } from '../../../context/reducers/actions/ActionTypes'
+import HttpClient from '../../../utility/HttpClient'
 import axios from 'axios'
 
 export default function Form(props) {
-    const {state, dispatch, signupState, signupdispatch} = useContext(GlobalContext)
+    const { state, dispatch, signupState, signupdispatch } = useContext(GlobalContext)
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -18,14 +19,14 @@ export default function Form(props) {
     const [redirectLogin, setRedirectLogin] = useState(false)
     const [isLogin, setIsLogin] = useState(false)
 
-    useEffect(()=>{
+    useEffect(() => {
         const token = localStorage.getItem('token')
-        if (token != null){
+        if (token != null) {
             setIsLogin(true)
         }
     })
 
-    const signup = () => {
+    const signup = async () => {
 
         try {
             const data = {}
@@ -38,23 +39,45 @@ export default function Form(props) {
             // console.log(data);
 
             try {
-                axios.post('http://localhost:3001/api/v1/signup', data, { validateStatus: false })
-                    .then(function (response) {
-                        // console.log(response);
-                        if (response.data.error === false) {
-                            setMessage(response.data.message)
-                            setError(response.data.error)
-                            setRedirectLogin(true)
-                            signupdispatch({type:USER_SIGNUP, payload: "Signup"})
-                        } else {
-                            setMessage(response.data.message)
-                            setError(response.data.error)
-                        }
-                    })
-                    .catch(function (error) {
+                // axios.post('http://localhost:3001/api/v1/signup', data, { validateStatus: false })
+                    // .then(function (response) {
+                    //     // console.log(response);
+                    //     if (response.data.error === false) {
+                    //         setMessage(response.data.message)
+                    //         setError(response.data.error)
+                    //         setRedirectLogin(true)
+                    //         signupdispatch({ type: USER_SIGNUP, payload: "Signup" })
+                    //     } else {
+                    //         setMessage(response.data.message)
+                    //         setError(response.data.error)
+                    //     }
+                    // })
+                //     .catch(function (error) {
+                //         setError(true)
+                //         setMessage("Internal Server Error. Please Try Again")
+                //     });
+
+                const response = await HttpClient.post('signup', data);
+                console.log(response);
+                try {
+                    if (typeof(response) == 'string') {
                         setError(true)
                         setMessage("Internal Server Error. Please Try Again")
-                    });
+                    }
+                    if (response.error === false) {
+                        setMessage(response.message)
+                        setError(response.error)
+                        setRedirectLogin(true)
+                        signupdispatch({ type: USER_SIGNUP, payload: "Signup" })
+                    } else {
+                        setMessage(response.message)
+                        setError(response.error)
+                    }
+                } catch (error) {
+                    setError(true)
+                    setMessage("Internal Server Error. Please Try Again")
+                }
+
             } catch (error) {
                 setError(true)
                 setMessage("Internal Server Error. Please Try Again")
@@ -66,7 +89,7 @@ export default function Form(props) {
         }
     }
 
-    const login = () => {
+    const login = async () => {
 
         try {
             const data = {}
@@ -79,25 +102,50 @@ export default function Form(props) {
             // console.log(data);
 
             try {
-                axios.post('http://localhost:3001/api/v1/signin', data, { validateStatus: false })
-                    .then(function (response) {
-                        // console.log(response);
-                        if (response.data.error === false) {
-                            setMessage(response.data.message)
-                            setError(response.data.error)
-                            const token = response.data.token
-                            localStorage.setItem('token', token)
-                            setRedirectHome(true)
-                            dispatch({type:USER_SIGNIN, payload: response.data.token})
-                        } else {
-                            setMessage(response.data.message)
-                            setError(response.data.error)
-                        }
-                    })
-                    .catch(function (error) {
+                // axios.post('http://localhost:3001/api/v1/signin', data, { validateStatus: false })
+                //     .then(function (response) {
+                //         // console.log(response);
+                //         if (response.data.error === false) {
+                //             setMessage(response.data.message)
+                //             setError(response.data.error)
+                //             const token = response.data.token
+                //             localStorage.setItem('token', token)
+                //             setRedirectHome(true)
+                //             dispatch({type:USER_SIGNIN, payload: response.data.token})
+                //         } else {
+                //             setMessage(response.data.message)
+                //             setError(response.data.error)
+                //         }
+                //     })
+                // .catch(function (error) {
+                //     setError(true)
+                //     setMessage(error.message)
+                // });
+
+                const response = await HttpClient.post('signin', data);
+                console.log(response);
+                try {
+                    if (typeof(response) == 'string') {
                         setError(true)
-                        setMessage(error.message)
-                    });
+                        setMessage("Internal Server Error. Please Try Again")
+                    }
+                    if (response.error === false) {
+                        setMessage(response.message)
+                        setError(response.error)
+                        const token = response.token
+                        localStorage.setItem('token', token)
+                        setRedirectHome(true)
+                        dispatch({ type: USER_SIGNIN, payload: response.token })
+                    } else {
+                        setMessage(response.message)
+                        setError(response.error)
+                    }
+                } catch (error) {
+                    setError(true)
+                    setMessage(error.message)
+                }
+
+
             } catch (error) {
                 setError(true)
                 setMessage(error.message)
@@ -109,16 +157,16 @@ export default function Form(props) {
         }
     }
 
-    if(redirectHome){
-        return (<Redirect to='/'/>)
+    if (redirectHome) {
+        return (<Redirect to='/' />)
     }
 
-    if(isLogin){
-        return (<Redirect to='/'/>)
+    if (isLogin) {
+        return (<Redirect to='/' />)
     }
 
-    if(redirectLogin){
-        return (<Redirect to='/signin'/>)
+    if (redirectLogin) {
+        return (<Redirect to='/signin' />)
     }
 
     return (
@@ -135,7 +183,7 @@ export default function Form(props) {
                     </h5>
                     <hr />
                     {
-                        message != null ?
+                        message !== null ?
                             <p>{message}</p>
                             : null
                     }
@@ -169,7 +217,7 @@ export default function Form(props) {
                             : null
                     }
                     {
-                        props.page === "signup"  ?
+                        props.page === "signup" ?
                             <button href="#" class="btn btn-primary" onClick={signup}>
                                 Register
                             </button>

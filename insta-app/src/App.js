@@ -1,4 +1,4 @@
-import React, {useReducer, createContext} from 'react';
+import React, { useReducer, createContext } from 'react';
 import { BrowserRouter } from 'react-router-dom'
 import './App.css';
 import CustomLayout from './CustomLayout';
@@ -9,11 +9,11 @@ import { GlobalProvider } from './context/Provider'
 function App() {
   return (
     <GlobalProvider>
-    <BrowserRouter>
-      <CustomLayout>
-        <BaseRoute />
-      </CustomLayout>
-    </BrowserRouter>
+      <BrowserRouter>
+        <CustomLayout>
+          <BaseRoute />
+        </CustomLayout>
+      </BrowserRouter>
     </GlobalProvider>
   );
 }
