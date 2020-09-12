@@ -1,4 +1,6 @@
 import React from 'react'
+import FavoriteIcon from '@material-ui/icons/Favorite'
+import ModeCommentRoundedIcon from '@material-ui/icons/ModeCommentRounded';
 
 export default function ProfilePage() {
     return (
@@ -58,7 +60,7 @@ export default function ProfilePage() {
 
                     <div class="gallery">
 
-                        <div class="gallery-item" tabindex="0">
+                        {/* <div class="gallery-item" tabindex="0">
 
                             <img src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=1500&h=500&fit=crop" class="gallery-image" alt="" />
 
@@ -80,7 +82,7 @@ export default function ProfilePage() {
 
                             </div>
 
-                        </div>
+                        </div> */}
 
                         <div class="gallery-item" tabindex="0">
 
@@ -89,8 +91,14 @@ export default function ProfilePage() {
                             <div class="gallery-item-info">
 
                                 <ul>
-                                    <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> 89</li>
-                                    <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> 5</li>
+                                    <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span>
+                                    {/* <i class="fas fa-heart" aria-hidden="true"></i> */}
+                                    <FavoriteIcon />
+                                     89</li>
+                                    <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span>
+                                    {/* <i class="fas fa-comment" aria-hidden="true"></i> */}
+                                    <ModeCommentRoundedIcon />
+                                     5</li>
                                 </ul>
 
                             </div>

@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { Link, Redirect, NavLink, useHistory } from 'react-router-dom'
-import { GlobalContex } from './App'
+import { GlobalContext } from './context/Provider'
 
 export default function CustomLayout(props) {
 
     const [token, setToken] = useState(null)
     const [log_out, setLogout] = useState(false)
     const [isLogin, setIsLogin] = useState(false)
-    const {state, dispatch, signupState, signupdispatch} = useContext(GlobalContex)
+    const {state, dispatch, signupState, signupdispatch} = useContext(GlobalContext)
     console.log(state);
     console.log(signupState);
     const history = useHistory()

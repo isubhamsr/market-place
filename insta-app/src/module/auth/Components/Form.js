@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { NavLink, Redirect } from 'react-router-dom'
-import { GlobalContex } from '../../../App'
+import { GlobalContext } from '../../../context/Provider'
 import { USER_SIGNIN, USER_SIGNUP } from '../../../context/reducers/actions/ActionTypes'
 import axios from 'axios'
 
 export default function Form(props) {
-    const {state, dispatch, signupState, signupdispatch} = useContext(GlobalContex)
+    const {state, dispatch, signupState, signupdispatch} = useContext(GlobalContext)
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
