@@ -3,6 +3,7 @@ import { NavLink, Redirect } from 'react-router-dom'
 import { GlobalContext } from '../../../context/Provider'
 import { USER_SIGNIN, USER_SIGNUP } from '../../../context/reducers/actions/ActionTypes'
 import HttpClient from '../../../utility/HttpClient'
+import Storage from '../../../utility/Storage'
 import axios from 'axios'
 
 export default function Form(props) {
@@ -133,7 +134,8 @@ export default function Form(props) {
                         setMessage(response.message)
                         setError(response.error)
                         const token = response.token
-                        localStorage.setItem('token', token)
+                        // localStorage.setItem('token', token)
+                        Storage.set('token', token)
                         setRedirectHome(true)
                         dispatch({ type: USER_SIGNIN, payload: response.token })
                     } else {
