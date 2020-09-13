@@ -32,7 +32,7 @@ const HttpClient = {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token,
+                'token': token,
             },
         }
         if (method != 'GET') {
@@ -42,7 +42,7 @@ const HttpClient = {
         await fetch(url, config)
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            // console.log(data);
             response = data
         })
         .catch(error => {

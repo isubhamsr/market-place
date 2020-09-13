@@ -1,8 +1,23 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import HttpClient from '../../../utility/HttpClient'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import ModeCommentRoundedIcon from '@material-ui/icons/ModeCommentRounded';
 
 export default function ProfilePage() {
+
+    const [posts, setPosts] = useState([])
+
+    useEffect(() => {
+        getResponse()
+    }, [])
+
+    const getResponse = async () =>{
+        const response = await HttpClient.get('userpost');
+        console.log(response);
+        response.posts.reverse()
+        setPosts(response.posts)
+    }
+
     return (
         <React.Fragment>
             <header>
@@ -13,7 +28,7 @@ export default function ProfilePage() {
 
                         <div class="profile-image">
 
-                            <img src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt="" />
+                            <img src="http://res.cloudinary.com/dkcwzsz7t/image/upload/v1598457071/kcukgc0e3m06phtg6lji.jpg" alt="" />
 
                         </div>
 
@@ -54,13 +69,58 @@ export default function ProfilePage() {
 
             </header>
 
-            <section>
+            <section style={{ display: "flex", flexWrap: "wrap" }} className="container">
+
+                {
+                    posts.map((item) => (
+                        item.post_image !== '' && item.post_image !== null?
+
+                            <div class="profile-card">
+                                <img src={item.post_image} class="card-img" alt="..." />
+                            </div>
+                            : null
+                    ))
+                }
+                        
+
+                {/* <div class="card" style={{ width: "17rem", margin:"2px"}}>
+                    <img src="https://source.unsplash.com/random/800x600" class="card-img" alt="..." />
+                </div>
+
+                <div class="card" style={{ width: "17rem", margin:"2px" }}>
+                    <img src="https://source.unsplash.com/random/800x600" class="card-img" alt="..." />
+                </div>
+
+                <div class="card" style={{ width: "17rem", margin:"2px" }}>
+                    <img src="https://source.unsplash.com/random/800x600" class="card-img" alt="..." />
+                </div>
+
+                <div class="card" style={{ width: "17rem", margin:"2px" }}>
+                    <img src="https://source.unsplash.com/random/800x600" class="card-img" alt="..." />
+                </div>
+
+                <div class="card" style={{ width: "17rem", margin:"2px" }}>
+                    <img src="https://source.unsplash.com/random/800x600" class="card-img" alt="..." />
+                </div>
+
+                <div class="card" style={{ width: "17rem", margin:"2px" }}>
+                    <img src="https://source.unsplash.com/random/800x600" class="card-img" alt="..." />
+                </div>
+
+                <div class="card" style={{ width: "17rem", margin:"2px" }}>
+                    <img src="https://source.unsplash.com/random/800x600" class="card-img" alt="..." />
+                </div> */}
+
+
+            </section>
+
+            {/* <section>
 
                 <div class="profile-body-container">
 
                     <div class="gallery">
 
-                        {/* <div class="gallery-item" tabindex="0">
+                        <div class="gallery-item" tabindex="0">
 
                             <img src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=1500&h=500&fit=crop" class="gallery-image" alt="" />
 
@@ -82,7 +142,7 @@ export default function ProfilePage() {
 
                             </div>
 
-                        </div> */}
+                        </div>
 
                         <div class="gallery-item" tabindex="0">
 
@@ -92,11 +152,9 @@ export default function ProfilePage() {
 
                                 <ul>
                                     <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span>
-                                    {/* <i class="fas fa-heart" aria-hidden="true"></i> */}
                                     <FavoriteIcon />
                                      89</li>
                                     <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span>
-                                    {/* <i class="fas fa-comment" aria-hidden="true"></i> */}
                                     <ModeCommentRoundedIcon />
                                      5</li>
                                 </ul>
@@ -297,7 +355,7 @@ export default function ProfilePage() {
 
                 </div>
 
-            </section>
+            </section> */}
         </React.Fragment>
     )
 }

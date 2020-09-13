@@ -1,7 +1,22 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
+import HttpClient from '../../../utility/HttpClient'
 import ShowMoreText from 'react-show-more-text';
 
 export default function HomeCard() {
+
+  const [allPosts, setAllPosts] = useState([])
+
+  useEffect(() => {
+      getResponse()
+  })
+
+  const getResponse = async () =>{
+    const response = await HttpClient.get('fetchallpost');
+      console.log(response);
+      response.posts.reverse()
+      setAllPosts(response.posts)
+  }
+
   return (
     <section class="hero">
       <div class="container">
@@ -9,9 +24,14 @@ export default function HomeCard() {
 
           <div class="col-lg-6 offset-lg-3">
 
-            <div class="cardbox shadow-lg bg-white">
 
-              <div class="cardbox-heading">
+            
+            {
+              allPosts.map((item)=>(
+
+                
+            <div class="cardbox shadow-lg bg-white">
+                <div class="cardbox-heading">
                 <div class="dropdown float-right">
                   <button class="btn btn-flat btn-flat-icon" type="button" data-toggle="dropdown" aria-expanded="false">
                     <em class="fa fa-ellipsis-h"></em>
@@ -27,14 +47,33 @@ export default function HomeCard() {
                     <a href=""><img class="img-fluid rounded-circle" src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/4.jpg" alt="User" /></a>
                   </div>
                   <div class="media-body">
-                    <p class="m-0">Benjamin Robinson</p>
+                    <p class="m-0">{item.posted_by.username}</p>
                   </div>
                 </div>
               </div>
-
+                <>
+              {
+                item.post_image !== '' && item.post_image !== null ?
               <div class="cardbox-item">
-                <img class="img-fluid" src="https://source.unsplash.com/random/1080x1080" alt="Image" />
+                <img class="img-fluid" src={item.post_image} alt="Image" />
               </div>
+                :
+                <div className="post-description">
+                <ShowMoreText
+                    lines={10}
+                    more='Show more'
+                    less='Show less'
+                    anchorClass='ok'
+                    // onClick={this.executeOnClick}
+                    // expanded={false}
+                  // width={280}
+                  >
+                    {item.post_description}
+                  </ShowMoreText>
+                {/* <p>{item.post_description}</p> */}
+                </div>
+              }
+              </>
               <div class="cardbox-base">
                 <ul class="float-right">
                   <li><a><i class="fa fa-comments"></i></a></li>
@@ -52,24 +91,28 @@ export default function HomeCard() {
                 </ul>
               </div>
               <div className="post-description">
+              {
+                item.post_image !== '' && item.post_image !== null && item.post_description !== 'none'?
+                <>
                 <div className="post-username">
                   <b>isubhamsr : </b>
                 </div>
                 {/* <div className="description-body"> */}
                   <ShowMoreText
                     lines={1}
-                    more='Show more'
-                    less='Show less'
+                    more=' Show more'
+                    less=' Show less'
                     anchorClass='ok'
                     // onClick={this.executeOnClick}
                     // expanded={false}
                   // width={280}
                   >
-                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ex elit, tristique vitae turpis ac, pellentesque iaculis libero. In accumsan velit sit amet nisi tempor, ac ornare arcu convallis. Praesent volutpat magna nec dui egestas, sit amet aliquet felis semper. Fusce lacinia turpis a pharetra commodo. Vestibulum ac purus in sapien vulputate vestibulum vitae nec tortor. Morbi ultricies, nisi at facilisis feugiat, nulla metus faucibus quam, at consectetur nunc orci quis nisi. Etiam ullamcorper elementum elit sit amet iaculis. Ut eget lacus vestibulum, vehicula eros sit amet, condimentum est. Aliquam finibus lacus non tristique fringilla. Vivamus lacinia, nulla eget vulputate volutpat, ex nisi pellentesque mi, vel mattis tortor sapien ut massa. Phasellus sit amet lacus volutpat, bibendum dui at, facilisis est. Integer rutrum orci vitae augue dictum dictum. Ut et mauris magna. Morbi elementum scelerisque mi vel luctus.
-
-                    #Aenean magna turpis, tristique id varius vitae, ultricies non sem. Mauris quis magna a quam maximus pretium in a felis. Cras viverra, lectus ac ullamcorper maximus, eros nulla finibus mi, finibus finibus felis dolor in velit. Mauris commodo lorem ac rhoncus condimentum. Suspendisse imperdiet malesuada augue at auctor. Nullam mattis nulla et velit egestas, congue porta elit pharetra. Phasellus sed bibendum nulla.
-</ShowMoreText>
+                     {item.post_description}
+                  </ShowMoreText>
                 {/* </div> */}
+                </>
+              : null
+              }
               </div>
               <div className="user-comments">
                 <span><b>Subham</b>: Hello</span>
@@ -87,8 +130,15 @@ export default function HomeCard() {
                   <input placeholder="Write a comment" type="text" />
                 </div>
               </div>
-
             </div>
+                
+              ))
+            }
+
+              
+              
+
+
 
           </div>
 
