@@ -8,10 +8,10 @@ export default function HomeCard(props) {
   const [allPosts, setAllPosts] = useState([])
 
   useEffect(() => {
-    if(props.token !== null){
-
-      getResponse()
-    }
+      if(props.token !== null && props.post === undefined){
+  
+        getResponse()
+      }
   })
 
   const getResponse = async () =>{

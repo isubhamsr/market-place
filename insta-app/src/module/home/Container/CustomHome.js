@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import HomeCard from '../Components/HomeCard'
 
-export default function CustomHome() {
+export default function CustomHome(props) {
 
     const [redirect, setRedirect] = useState(false)
     const [token, setToken] = useState(null)
@@ -21,6 +21,6 @@ export default function CustomHome() {
     if(redirect){
         return (<Redirect to='/signin'/>)
     }else{
-        return (<HomeCard token={token}/>)
+        return (<HomeCard token={token} />)
     }
 }
