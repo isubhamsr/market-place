@@ -9,7 +9,7 @@ export default function CustomProfile() {
 
     useEffect(()=>{
         const token = localStorage.getItem('token')
-        console.log(token);
+        // console.log(token);
         setToken(token)
         if (token === null){
             // let history = useHistory()

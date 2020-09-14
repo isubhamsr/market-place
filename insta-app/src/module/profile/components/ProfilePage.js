@@ -19,10 +19,10 @@ export default function ProfilePage(props) {
 
     const getResponse = async () =>{
         const response = await HttpClient.get('userpost');
-        console.log(response);
+        // console.log(response);
         response.posts.reverse()
         const decodeToken = JSON.parse(atob(props.token.split('.')[1]));
-        console.log(decodeToken);
+        // console.log(decodeToken);
         setUserName(decodeToken.user_username)
         setName(decodeToken.user_name)
         setPosts(response.posts)

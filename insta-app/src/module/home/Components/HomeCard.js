@@ -15,7 +15,6 @@ export default function HomeCard(props) {
 
   const getResponse = async () =>{
     const response = await HttpClient.get('fetchallpost');
-      console.log(response);
       response.posts.reverse()
       setAllPosts(response.posts)
   }

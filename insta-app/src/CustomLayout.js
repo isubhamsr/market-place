@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { Link, Redirect, NavLink, useHistory } from 'react-router-dom'
+import { AddAPhoto, ControlPoint } from '@material-ui/icons'
 import { GlobalContext } from './context/Provider'
 
 export default function CustomLayout(props) {
@@ -9,8 +10,8 @@ export default function CustomLayout(props) {
     const [isLogin, setIsLogin] = useState(false)
     const [username, setUsername] = useState(null)
     const {state, dispatch, signupState, signupdispatch} = useContext(GlobalContext)
-    console.log(state);
-    console.log(signupState);
+    // console.log(state);
+    // console.log(signupState);
     const history = useHistory()
 
     useEffect(() => {
@@ -18,7 +19,7 @@ export default function CustomLayout(props) {
 
         if (token != null) {
             const decodeToken = JSON.parse(atob(token.split('.')[1]));
-        console.log(decodeToken);
+        // console.log(decodeToken);
         setUsername(decodeToken.user_username)
             setToken(token)
         }
@@ -73,8 +74,10 @@ export default function CustomLayout(props) {
                                         {/* <Link class="nav-link" to="/profile">Profile</Link>
 
                                 <div class="dropdown float-right"> */}
+                                <Link to='/create'><ControlPoint /></Link>
                                         <button class="btn btn-flat btn-flat-icon" type="button" data-toggle="dropdown" aria-expanded="false">
                                             <div class="d-flex mr-3">
+                                                
                                                 <a href=""><img class="img-fluid rounded-circle" height={30} width={30} src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/4.jpg" alt="User" /></a>
                                             </div>
                                         </button>
