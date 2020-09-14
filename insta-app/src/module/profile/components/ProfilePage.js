@@ -12,16 +12,6 @@ export default function ProfilePage() {
     const [name, setName] = useState(null)
 
     useEffect(() => {
-        const isCheck = localStorage.getItem('token')
-        console.log(isCheck);
-        if(isCheck === null){
-            setIsLogin(false)
-            return
-        }
-        const decodeToken = JSON.parse(atob(isCheck.split('.')[1]));
-        console.log(decodeToken);
-        setUserName(decodeToken.user_username)
-        setName(decodeToken.user_name)
         getResponse()
     }, [])
 
@@ -30,10 +20,6 @@ export default function ProfilePage() {
         console.log(response);
         response.posts.reverse()
         setPosts(response.posts)
-    }
-
-    if(isLogin === false){
-        return <Redirect to='/signin' />
     }
 
     return (

@@ -76,7 +76,7 @@ export default function CustomLayout(props) {
                                             </div>
                                         </button>
                                         <div class="dropdown-menu dropdown-scale dropdown-menu-right" role="menu">
-                                            <Link class="dropdown-item" to={`/${username}`}>Profile</Link>
+                                            <Link class="dropdown-item" to='/profile'>Profile</Link>
                                             <button class="dropdown-item" onClick={logout}>Logout</button>
                                         </div>
                                         {/* </div> */}

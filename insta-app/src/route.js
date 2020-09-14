@@ -12,7 +12,7 @@ export default function BaseRoute() {
             <Route exact path="/" component={CustomHome} />
             <Route path="/signin" component={() => (<CustomForm page="signin" />)} />
             <Route path="/signup" component={() => (<CustomForm page="signup" />)} />
-            <Route path="/:profile" component={CustomProfile} />
+            <Route path="/profile" component={CustomProfile} />
             <Route path="/create" component={CustomPost} />
         </div>
     )
