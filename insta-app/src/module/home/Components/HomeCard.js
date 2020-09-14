@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import HttpClient from '../../../utility/HttpClient'
 import ShowMoreText from 'react-show-more-text';
+import { Link } from 'react-router-dom'
 
 export default function HomeCard(props) {
 
@@ -44,14 +45,14 @@ export default function HomeCard(props) {
                     <a class="dropdown-item" href="#">Report</a>
                   </div>
                 </div>
-                <div class="media m-0">
+                <Link class="media m-0" to={`/profile/${item.posted_by.username}`}>
                   <div class="d-flex mr-3">
-                    <a href=""><img class="img-fluid rounded-circle" src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/4.jpg" alt="User" /></a>
+                    <img class="img-fluid rounded-circle" src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/4.jpg" alt="User" />
                   </div>
                   <div class="media-body">
                     <p class="m-0">{item.posted_by.username}</p>
                   </div>
-                </div>
+                </Link>
               </div>
                 <>
               {
