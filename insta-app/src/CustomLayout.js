@@ -7,6 +7,7 @@ export default function CustomLayout(props) {
     const [token, setToken] = useState(null)
     const [log_out, setLogout] = useState(false)
     const [isLogin, setIsLogin] = useState(false)
+    const [username, setUsername] = useState(null)
     const {state, dispatch, signupState, signupdispatch} = useContext(GlobalContext)
     console.log(state);
     console.log(signupState);
@@ -28,6 +29,7 @@ export default function CustomLayout(props) {
         if(log_out){
             history.push('/signin')
         }
+
     })
 
     const logout = () => {
@@ -74,7 +76,7 @@ export default function CustomLayout(props) {
                                             </div>
                                         </button>
                                         <div class="dropdown-menu dropdown-scale dropdown-menu-right" role="menu">
-                                            <Link class="dropdown-item" to="/profile">Profile</Link>
+                                            <Link class="dropdown-item" to={`/${username}`}>Profile</Link>
                                             <button class="dropdown-item" onClick={logout}>Logout</button>
                                         </div>
                                         {/* </div> */}

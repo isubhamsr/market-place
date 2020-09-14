@@ -71,8 +71,7 @@ main > .container{
 }
 
 .card{
-      max-width: "17rem";
-      margin:"2px";
+      width: 17rem;
 }
 
 @media (max-width: 768px) {

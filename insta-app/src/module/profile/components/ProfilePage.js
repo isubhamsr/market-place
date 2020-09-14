@@ -2,12 +2,26 @@ import React, { useState, useEffect } from 'react'
 import HttpClient from '../../../utility/HttpClient'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import ModeCommentRoundedIcon from '@material-ui/icons/ModeCommentRounded';
+import { Redirect } from 'react-router-dom';
 
 export default function ProfilePage() {
 
     const [posts, setPosts] = useState([])
+    const [isLogin, setIsLogin] = useState(true)
+    const [userName, setUserName] = useState(null)
+    const [name, setName] = useState(null)
 
     useEffect(() => {
+        const isCheck = localStorage.getItem('token')
+        console.log(isCheck);
+        if(isCheck === null){
+            setIsLogin(false)
+            return
+        }
+        const decodeToken = JSON.parse(atob(isCheck.split('.')[1]));
+        console.log(decodeToken);
+        setUserName(decodeToken.user_username)
+        setName(decodeToken.user_name)
         getResponse()
     }, [])
 
@@ -16,6 +30,10 @@ export default function ProfilePage() {
         console.log(response);
         response.posts.reverse()
         setPosts(response.posts)
+    }
+
+    if(isLogin === false){
+        return <Redirect to='/signin' />
     }
 
     return (
@@ -34,7 +52,7 @@ export default function ProfilePage() {
 
                         <div class="profile-user-settings">
 
-                            <h1 class="profile-user-name">janedoe_</h1>
+                            <h1 class="profile-user-name">{userName}</h1>
 
                             <button class="btn profile-edit-btn">Edit Profile</button>
 
@@ -59,7 +77,10 @@ export default function ProfilePage() {
 
                         <div class="profile-bio">
 
-                            <p><span class="profile-real-name">Jane Doe</span> Lorem ipsum dolor sit, amet consectetur adipisicing elit 📷✈️🏕️</p>
+                            <p><span class="profile-real-name">{name}</span></p>
+                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit 📷✈️🏕️</p>
+                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit 📷✈️🏕️</p>
+                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit 📷✈️🏕️</p>
 
                         </div>
 
