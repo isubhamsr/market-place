@@ -1,14 +1,28 @@
 import React, { useState, useEffect } from 'react'
 import HttpClient from '../../../utility/HttpClient'
-import FavoriteIcon from '@material-ui/icons/Favorite'
+import { AddAPhoto, ControlPoint } from '@material-ui/icons'
+import { Link, Redirect, NavLink, useHistory } from 'react-router-dom'
 import ModeCommentRoundedIcon from '@material-ui/icons/ModeCommentRounded';
 
 export default function ProfilePage() {
 
     const [posts, setPosts] = useState([])
+    const [username, setUsername] = useState(null)
+    const [name, setName] = useState(null)
+    const [isLogin, setIsLogin] = useState(true)
 
     useEffect(() => {
-        getResponse()
+        const isChack = localStorage.getItem('token')
+        if(isChack === null){
+            setIsLogin(false)
+        }else{
+
+            const decodeToken = JSON.parse(atob(isChack.split('.')[1]));
+            console.log(decodeToken);
+            setUsername(decodeToken.user_username)
+            setName(decodeToken.user_name)
+            getResponse()
+        }
     }, [])
 
     const getResponse = async () =>{
@@ -16,6 +30,10 @@ export default function ProfilePage() {
         console.log(response);
         response.posts.reverse()
         setPosts(response.posts)
+    }
+    
+    if(isLogin === false){
+        return <Redirect to='/signin'/>
     }
 
     return (
@@ -34,15 +52,17 @@ export default function ProfilePage() {
 
                         <div class="profile-user-settings">
 
-                            <h1 class="profile-user-name">janedoe_</h1>
+                            <h1 class="profile-user-name">{username}</h1>
 
                             <button class="btn profile-edit-btn">Edit Profile</button>
 
                             <button class="btn profile-settings-btn" aria-label="profile settings">
-                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-sliders" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                {/* <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-sliders" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M14 3.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0zM11.5 5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM7 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0zM4.5 10a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm9.5 3.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0zM11.5 15a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
                                     <path fill-rule="evenodd" d="M9.5 4H0V3h9.5v1zM16 4h-2.5V3H16v1zM9.5 14H0v-1h9.5v1zm6.5 0h-2.5v-1H16v1zM6.5 9H16V8H6.5v1zM0 9h2.5V8H0v1z" />
-                                </svg>
+                                </svg> */}
+                                <Link to='/create'><ControlPoint /></Link>
+                                
                             </button>
 
                         </div>
@@ -59,7 +79,8 @@ export default function ProfilePage() {
 
                         <div class="profile-bio">
 
-                            <p><span class="profile-real-name">Jane Doe</span> Lorem ipsum dolor sit, amet consectetur adipisicing elit 📷✈️🏕️</p>
+                            <p><span class="profile-real-name">{name}</span></p>
+                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit 📷✈️🏕️</p>
 
                         </div>
 

@@ -116,7 +116,7 @@ main > .container{
 @media (min-width: 1300px) {
   .profile-card{
     width: 17rem;
-    margin: 2px;
+    margin: 8px;
   }
 }
 
@@ -559,6 +559,13 @@ text-align: center;
 .profile-stat-count,
 .profile-edit-btn {
   font-weight: 600;
+}
+
+.profile-real-name{
+  font-size: 28px;
+}
+.profile-user-name{
+  font-size: 32px;
 }
 
 .profile-stats-ul{

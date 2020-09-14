@@ -6,7 +6,8 @@ export default function CustomLayout(props) {
 
     const [token, setToken] = useState(null)
     const [log_out, setLogout] = useState(false)
-    const [isLogin, setIsLogin] = useState(false)
+    const [isLogin, setIsLogin] = useState(true)
+    const [username, setUsername] = useState(null)
     const {state, dispatch, signupState, signupdispatch} = useContext(GlobalContext)
     console.log(state);
     console.log(signupState);
@@ -28,6 +29,17 @@ export default function CustomLayout(props) {
         if(log_out){
             history.push('/signin')
         }
+
+        // const isChack = localStorage.getItem('token')
+        // console.log(isChack);
+        // if(isChack === null){
+        //     setIsLogin(false)
+        // }else{
+
+        //     const decodeToken = JSON.parse(atob(isChack.split('.')[1]));
+        //     console.log(decodeToken);
+        //     setUsername(decodeToken.user_username)
+        // }
     })
 
     const logout = () => {
@@ -35,6 +47,10 @@ export default function CustomLayout(props) {
         setLogout(true)
         setToken(null)
     }
+
+    // if(isLogin === false){
+    //     return <Redirect to='/signin'/>
+    // }
 
 
     return (
@@ -70,11 +86,11 @@ export default function CustomLayout(props) {
                                 <div class="dropdown float-right"> */}
                                         <button class="btn btn-flat btn-flat-icon" type="button" data-toggle="dropdown" aria-expanded="false">
                                             <div class="d-flex mr-3">
-                                                <a href=""><img class="img-fluid rounded-circle" height={30} width={30} src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/4.jpg" alt="User" /></a>
+                                                <a href=""><img class="img-fluid rounded-circle" height={30} width={30} src="http://res.cloudinary.com/dkcwzsz7t/image/upload/v1598457071/kcukgc0e3m06phtg6lji.jpg" alt="User" /></a>
                                             </div>
                                         </button>
                                         <div class="dropdown-menu dropdown-scale dropdown-menu-right" role="menu">
-                                            <Link class="dropdown-item" to="/profile">Profile</Link>
+                                            <Link class="dropdown-item" to={`/${username}`}>Profile</Link>
                                             <button class="dropdown-item" onClick={logout}>Logout</button>
                                         </div>
                                         {/* </div> */}
