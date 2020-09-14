@@ -2,12 +2,15 @@ import React, {useState, useEffect} from 'react'
 import HttpClient from '../../../utility/HttpClient'
 import ShowMoreText from 'react-show-more-text';
 
-export default function HomeCard() {
+export default function HomeCard(props) {
 
   const [allPosts, setAllPosts] = useState([])
 
   useEffect(() => {
+    if(props.token !== null){
+
       getResponse()
+    }
   })
 
   const getResponse = async () =>{

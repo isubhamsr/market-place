@@ -60,7 +60,7 @@ export default function CustomLayout(props) {
                             } */}
 
                             {
-                                token === null && !isLogin ?
+                                token === null ?
                                     <li class="nav-item">
                                         <Link class="nav-link active" aria-current="page" to="/signin">Sign In</Link>
                                     </li>

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import HttpClient from '../../../utility/HttpClient'
-import FavoriteIcon from '@material-ui/icons/Favorite'
-import ModeCommentRoundedIcon from '@material-ui/icons/ModeCommentRounded';
-import { Redirect } from 'react-router-dom';
+import { AddAPhoto, ControlPoint } from '@material-ui/icons'
+import { Redirect, Link } from 'react-router-dom';
 
-export default function ProfilePage() {
+export default function ProfilePage(props) {
 
     const [posts, setPosts] = useState([])
     const [isLogin, setIsLogin] = useState(true)
@@ -12,8 +11,11 @@ export default function ProfilePage() {
     const [name, setName] = useState(null)
 
     useEffect(() => {
-        getResponse()
-    }, [])
+        if(props.token !== null){
+
+            getResponse()
+          }
+    })
 
     const getResponse = async () =>{
         const response = await HttpClient.get('userpost');
@@ -43,10 +45,11 @@ export default function ProfilePage() {
                             <button class="btn profile-edit-btn">Edit Profile</button>
 
                             <button class="btn profile-settings-btn" aria-label="profile settings">
-                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-sliders" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                {/* <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-sliders" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M14 3.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0zM11.5 5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM7 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0zM4.5 10a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm9.5 3.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0zM11.5 15a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
                                     <path fill-rule="evenodd" d="M9.5 4H0V3h9.5v1zM16 4h-2.5V3H16v1zM9.5 14H0v-1h9.5v1zm6.5 0h-2.5v-1H16v1zM6.5 9H16V8H6.5v1zM0 9h2.5V8H0v1z" />
-                                </svg>
+                                </svg> */}
+                                <Link to='/create'><ControlPoint /></Link>
                             </button>
 
                         </div>
