@@ -17,6 +17,9 @@ export default function CustomLayout(props) {
         const token = localStorage.getItem("token")
 
         if (token != null) {
+            const decodeToken = JSON.parse(atob(token.split('.')[1]));
+        console.log(decodeToken);
+        setUsername(decodeToken.user_username)
             setToken(token)
         }
 
@@ -76,7 +79,7 @@ export default function CustomLayout(props) {
                                             </div>
                                         </button>
                                         <div class="dropdown-menu dropdown-scale dropdown-menu-right" role="menu">
-                                            <Link class="dropdown-item" to='/profile'>Profile</Link>
+                                            <Link class="dropdown-item" to={`/profile/${username}`}>Profile</Link>
                                             <button class="dropdown-item" onClick={logout}>Logout</button>
                                         </div>
                                         {/* </div> */}
