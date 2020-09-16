@@ -31,9 +31,12 @@ export default function HomeCard(props) {
   return (
     <React.Fragment>
       {error === false ?
-        allPosts.map((item) => (
-          <PostCard userName={item.posted_by.username} post_image={item.post_image} post_description={item.post_description} />
-        ))
+        allPosts.length === 0 ?
+          <div class="loader"></div>
+          :
+          allPosts.map((item) => (
+            <PostCard userName={item.posted_by.username} post_image={item.post_image} post_description={item.post_description} />
+          ))
         : <p>{message}</p>
       }
     </React.Fragment>

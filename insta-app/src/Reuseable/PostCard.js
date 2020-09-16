@@ -3,6 +3,11 @@ import ShowMoreText from 'react-show-more-text';
 import { Link } from 'react-router-dom'
 
 export default function PostCard({userName, post_image, post_description, }) {
+
+    const doubleClickLike = () =>{
+        console.log('doubleClickLike');
+    }
+
     return (
         <section class="hero">
             <div class="container">
@@ -33,7 +38,7 @@ export default function PostCard({userName, post_image, post_description, }) {
                                     <>
                                         {
                                             post_image !== '' && post_image !== null ?
-                                                <div class="cardbox-item">
+                                                <div class="cardbox-item" onDoubleClick={doubleClickLike}>
                                                     <img class="img-fluid" src={post_image} alt="Image" />
                                                 </div>
                                                 :

@@ -108,6 +108,9 @@ export default function ProfilePage(props) {
                     ))
                 } */}
                 {error === false ?
+                    posts.length === 0 ?
+                    <div class="loader"></div>
+                    :
                     posts.map((item)=>(
                         <PostCard userName={userName} post_image={item.post_image} post_description={item.post_description} />
                     ))
