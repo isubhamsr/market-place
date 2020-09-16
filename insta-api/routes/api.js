@@ -13,5 +13,7 @@ router.get("/user",user.user)
 router.post("/createpost",middlewares.verifyUser,post.createPosts)
 router.get("/fetchallpost",middlewares.verifyUser,post.fetchAllPosts)
 router.get("/userpost",middlewares.verifyUser,post.signUserPost)
+router.put("/like",middlewares.verifyUser,post.likePost)
+router.put("/unlike",middlewares.verifyUser,post.unLikePost)
 
 module.exports = router;

@@ -96,4 +96,48 @@ posts.signUserPost = (req, res)=>{
     }
 }
 
+posts.likePost = (req,res)=>{
+    try {
+        const userId = req.user.user_id
+        const postId = req.body.postId
+        Post.findByIdAndUpdate(postId,{
+            $push : {likes:userId}
+        },{
+            new:true
+        }).exec((error, result)=>{
+            if(error){
+                return res.status(422).json({error:true, message: error.message})
+            }
+            return res.status(200).json({error: false, message: "Like Added", data: result})
+        })
+    } catch (error) {
+        return res.status(500).json({
+            error: true,
+            message: error.message
+        })
+    }
+}
+
+posts.unLikePost = (req,res)=>{
+    try {
+        const userId = req.user.user_id
+        const postId = req.body.postId
+        Post.findByIdAndUpdate(postId,{
+            $pull : {likes:userId}
+        },{
+            new:true
+        }).exec((error, result)=>{
+            if(error){
+                return res.status(422).json({error:true, message: error.message})
+            }
+            return res.status(200).json({error: false, message: "Like Added", data: result})
+        })
+    } catch (error) {
+        return res.status(500).json({
+            error: true,
+            message: error.message
+        })
+    }
+}
+
 module.exports = posts;
