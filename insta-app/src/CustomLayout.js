@@ -45,7 +45,7 @@ export default function CustomLayout(props) {
 
     return (
         <React.Fragment>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light">
                 <div class="container-fluid">
                     <Link class="navbar-brand" to="/">
                         <span class="navbar-brand mb-0 h1">Instagram</span>

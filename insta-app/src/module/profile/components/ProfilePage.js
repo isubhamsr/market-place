@@ -13,6 +13,7 @@ export default function ProfilePage(props) {
     const [isLogin, setIsLogin] = useState(true)
     const [userName, setUserName] = useState(null)
     const [name, setName] = useState(null)
+    const [userId, setUserId] = useState(null)
     const [message, setMessage] = useState(null)
     const [error, setError] = useState(false)
 
@@ -30,6 +31,7 @@ export default function ProfilePage(props) {
         // console.log(decodeToken);
         setUserName(decodeToken.user_username)
         setName(decodeToken.user_name)
+        setUserId(decodeToken.user_id)
         if (response.error === true) {
             setError(true)
             setMessage(response.message)
@@ -112,7 +114,7 @@ export default function ProfilePage(props) {
                     <div class="loader"></div>
                     :
                     posts.map((item)=>(
-                        <PostCard userName={userName} post_image={item.post_image} post_description={item.post_description} postId={item._id} userId={item.posted_by._id} likes={item.likes}/>
+                        <PostCard userName={userName} post_image={item.post_image} post_description={item.post_description} postId={item._id} userId={userId} likes={item.likes}/>
                     ))
                     : <p>{message}</p>
                 }

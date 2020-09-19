@@ -13,6 +13,7 @@ export default function PostCard({userName, post_image, post_description, postId
         console.log(userId);
         console.log(likes);
         if(likes.includes(userId)){
+            console.log('yes');
             setIsLike(true)
         }else{
             console.log("no");
