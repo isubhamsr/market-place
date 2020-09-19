@@ -1,11 +1,41 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import ShowMoreText from 'react-show-more-text';
 import { Link } from 'react-router-dom'
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import HttpClient from '../utility/HttpClient'
 
-export default function PostCard({userName, post_image, post_description, }) {
+export default function PostCard({userName, post_image, post_description, postId, userId, likes}) {
 
-    const doubleClickLike = () =>{
-        console.log('doubleClickLike');
+    const [isLike, setIsLike] = useState(false)
+
+    useEffect(()=>{
+        console.log(userId);
+        console.log(likes);
+        if(likes.includes(userId)){
+            setIsLike(true)
+        }else{
+            console.log("no");
+        }
+    }, [])
+
+    const doLike = async ()=>{
+        console.log('like click');
+        const data = {
+            postId : postId
+        }
+        const response = await HttpClient.put('like', data);
+        console.log(response);
+        setIsLike(true)
+    }
+
+    const doUnLike = async ()=>{
+        const data = {
+            postId : postId
+        }
+        const response = await HttpClient.put('unlike', data);
+        console.log(response);
+        setIsLike(false)
     }
 
     return (
@@ -38,7 +68,7 @@ export default function PostCard({userName, post_image, post_description, }) {
                                     <>
                                         {
                                             post_image !== '' && post_image !== null ?
-                                                <div class="cardbox-item" onDoubleClick={doubleClickLike}>
+                                                <div class="cardbox-item" onDoubleClick={doLike}>
                                                     <img class="img-fluid" src={post_image} alt="Image" />
                                                 </div>
                                                 :
@@ -66,12 +96,17 @@ export default function PostCard({userName, post_image, post_description, }) {
                                             <li><a><em class="mr-3">03</em></a></li>
                                         </ul>
                                         <ul>
-                                            <li><a><i class="fa fa-thumbs-up"></i></a></li>
-                                            <li><a href="#"><img src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/3.jpeg" class="img-fluid rounded-circle" alt="User" /></a></li>
+                                            {
+                                                isLike !== true ?
+                                            <li onClick={doLike}><FavoriteBorderIcon /></li>
+                                            :
+                                            <li onClick={doUnLike}><FavoriteIcon style={{  "color" :"red" }} /></li>
+                                            }
+                                            {/* <li><a href="#"><img src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/3.jpeg" class="img-fluid rounded-circle" alt="User" /></a></li>
                                             <li><a href="#"><img src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/1.jpg" class="img-fluid rounded-circle" alt="User" /></a></li>
                                             <li><a href="#"><img src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/5.jpg" class="img-fluid rounded-circle" alt="User" /></a></li>
-                                            <li><a href="#"><img src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/2.jpg" class="img-fluid rounded-circle" alt="User" /></a></li>
-                                            <li><a><span>242 Likes</span></a></li>
+                                            <li><a href="#"><img src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/2.jpg" class="img-fluid rounded-circle" alt="User" /></a></li> */}
+                                            <li><a><span>{likes.length} Likes</span></a></li>
                                         </ul>
                                     </div>
                                     <div className="post-description">

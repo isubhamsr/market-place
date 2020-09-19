@@ -112,7 +112,7 @@ export default function ProfilePage(props) {
                     <div class="loader"></div>
                     :
                     posts.map((item)=>(
-                        <PostCard userName={userName} post_image={item.post_image} post_description={item.post_description} />
+                        <PostCard userName={userName} post_image={item.post_image} post_description={item.post_description} postId={item._id} userId={item.posted_by._id} likes={item.likes}/>
                     ))
                     : <p>{message}</p>
                 }

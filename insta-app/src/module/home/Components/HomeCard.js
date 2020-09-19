@@ -35,7 +35,7 @@ export default function HomeCard(props) {
           <div class="loader"></div>
           :
           allPosts.map((item) => (
-            <PostCard userName={item.posted_by.username} post_image={item.post_image} post_description={item.post_description} />
+            <PostCard userName={item.posted_by.username} post_image={item.post_image} post_description={item.post_description} postId={item._id} userId={item.posted_by._id} likes={item.likes}/>
           ))
         : <p>{message}</p>
       }
