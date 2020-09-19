@@ -6,6 +6,7 @@ import ShowMoreText from 'react-show-more-text';
 import CustomHome from '../../home/Container/CustomHome';
 import HomeCard from '../../home/Components/HomeCard';
 import PostCard from '../../../Reuseable/PostCard';
+import Storage from '../../../utility/Storage'
 
 export default function ProfilePage(props) {
 
@@ -27,16 +28,17 @@ export default function ProfilePage(props) {
     const getResponse = async () => {
         const response = await HttpClient.get('userpost');
         // console.log(response.posts);
-        const decodeToken = JSON.parse(atob(props.token.split('.')[1]));
+        // const decodeToken = JSON.parse(atob(props.token.split('.')[1]));
+        const result = Storage.decodeToken('token')
         // console.log(decodeToken);
-        setUserName(decodeToken.user_username)
-        setName(decodeToken.user_name)
-        setUserId(decodeToken.user_id)
+        setUserName(result.user_username)
+        setName(result.user_name)
+        setUserId(result.user_id)
         if (response.error === true) {
             setError(true)
             setMessage(response.message)
         } else {
-            response.posts.reverse()
+            // response.posts.reverse()
             setPosts(response.posts)
         }
     }

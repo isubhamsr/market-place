@@ -10,18 +10,16 @@ export default function PostCard({userName, post_image, post_description, postId
     const [isLike, setIsLike] = useState(false)
 
     useEffect(()=>{
-        console.log(userId);
-        console.log(likes);
+        // console.log(userId);
+        // console.log(likes);
         if(likes.includes(userId)){
-            console.log('yes');
+            // console.log('yes');
             setIsLike(true)
-        }else{
-            console.log("no");
         }
     }, [])
 
     const doLike = async ()=>{
-        console.log('like click');
+        // console.log('like click');
         const data = {
             postId : postId
         }

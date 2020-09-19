@@ -49,6 +49,7 @@ posts.fetchAllPosts = (req,res)=>{
         Post.find()
         .populate("posted_by", "_id username")
         .then((posts)=>{
+            posts.reverse()
             return res.status(200).json({
                 error: false,
                 message: "Fetch Posts",
@@ -76,6 +77,7 @@ posts.signUserPost = (req, res)=>{
             if(posts.length === 0){
                 return res.status(422).json({ error: true, message: "No Posts are Created by This User" })
             }
+            posts.reverse()
             return res.status(200).json({
                 error : false,
                 message : "Posts are Fetched",
@@ -130,7 +132,7 @@ posts.unLikePost = (req,res)=>{
             if(error){
                 return res.status(422).json({error:true, message: error.message})
             }
-            return res.status(200).json({error: false, message: "Like Added", data: result})
+            return res.status(200).json({error: false, message: "UnLike Added", data: result})
         })
     } catch (error) {
         return res.status(500).json({

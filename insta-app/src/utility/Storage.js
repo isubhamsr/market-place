@@ -23,6 +23,14 @@ const Storage = {
         } catch (error) {
             return error.message
         }
+    },
+    decodeToken : (key)=>{
+        try {
+            const decodeToken = JSON.parse(atob(Storage.get(key).split('.')[1]));
+            return decodeToken
+        } catch (error) {
+            return error.message
+        }
     }
 }
 
