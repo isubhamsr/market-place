@@ -142,4 +142,35 @@ posts.unLikePost = (req,res)=>{
     }
 }
 
+posts.commentPost = (req,res)=>{
+    try {
+        const userId = req.user.user_id
+        const postId = req.body.postId
+        const comment = req.body.comment
+
+        const comments = {
+            text : comment,
+            posted_by : userId
+        }
+
+        Post.findByIdAndUpdate(postId,{
+            $push : {comments:comments}
+        },{
+            new:true
+        })
+        .populate("comments.posted_by", "_id username")
+        .exec((error, result)=>{
+            if(error){
+                return res.status(422).json({error:true, message: error.message})
+            }
+            return res.status(200).json({error: false, message: "Comment Added", data: result})
+        })
+    } catch (error) {
+        return res.status(500).json({
+            error: true,
+            message: error.message
+        })
+    }
+}
+
 module.exports = posts;
