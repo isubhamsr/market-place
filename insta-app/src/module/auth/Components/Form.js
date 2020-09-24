@@ -124,7 +124,7 @@ export default function Form(props) {
                 // });
 
                 const response = await HttpClient.post('signin', data);
-                console.log(response);
+                // console.log(response);
                 try {
                     if (typeof(response) == 'string') {
                         setError(true)

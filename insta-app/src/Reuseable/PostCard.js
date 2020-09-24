@@ -5,9 +5,10 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import HttpClient from '../utility/HttpClient'
 
-export default function PostCard({userName, post_image, post_description, postId, userId, likes}) {
+export default function PostCard({userName, post_image, post_description, postId, userId, likes, comments}) {
 
     const [isLike, setIsLike] = useState(false)
+    const [comment, setComment] = useState(null)
 
     useEffect(()=>{
         // console.log(userId);
@@ -35,6 +36,18 @@ export default function PostCard({userName, post_image, post_description, postId
         const response = await HttpClient.put('unlike', data);
         console.log(response);
         setIsLike(false)
+    }
+
+    const addcomment = async (e) =>{
+        if(e.keyCode == 13){
+            const data = {
+                postId : postId,
+                comment : comment
+            }
+            const response = await HttpClient.put('comment', data);
+            console.log(response);
+            setComment('')
+         }
     }
 
     return (
@@ -133,10 +146,18 @@ export default function PostCard({userName, post_image, post_description, postId
                                         }
                                     </div>
                                     <div className="user-comments">
+                                        {/* <span><b>Subham</b>: Hello</span>
                                         <span><b>Subham</b>: Hello</span>
                                         <span><b>Subham</b>: Hello</span>
-                                        <span><b>Subham</b>: Hello</span>
-                                        <span><b>Subham</b>: Hello</span>
+                                        <span><b>Subham</b>: Hello</span> */}
+                                        {
+                                            comments.length === 0 ?
+                                            <span>No Comments</span>
+                                            :
+                                            comments.map((item)=>(
+                                                <span><b>{item.posted_by.username}</b>: {item.text}</span>
+                                            ))
+                                        }
                                     </div>
                                     <div class="cardbox-comments">
                                         <div>
@@ -145,7 +166,7 @@ export default function PostCard({userName, post_image, post_description, postId
                                             </span>
                                         </div>
                                         <div class="search">
-                                            <input placeholder="Write a comment" type="text" />
+                                            <input placeholder="Write a comment" type="text" onKeyDown={addcomment} value={comment} onChange={(e) => setComment(e.target.value)}/>
                                         </div>
                                     </div>
                                 </div>

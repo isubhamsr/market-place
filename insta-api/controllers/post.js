@@ -47,7 +47,7 @@ posts.createPosts = (req, res) => {
 posts.fetchAllPosts = (req,res)=>{
     try {
         Post.find()
-        .populate("posted_by", "_id username")
+        .populate("posted_by comments.posted_by", "_id username")
         .then((posts)=>{
             posts.reverse()
             return res.status(200).json({
@@ -73,6 +73,7 @@ posts.fetchAllPosts = (req,res)=>{
 posts.signUserPost = (req, res)=>{
     try {
         Post.find({posted_by:req.user.user_id})
+        .populate("comments.posted_by", "_id username")
         .then((posts)=>{
             if(posts.length === 0){
                 return res.status(422).json({ error: true, message: "No Posts are Created by This User" })
