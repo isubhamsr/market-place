@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import HttpClient from '../../../utility/HttpClient'
 import { AddAPhoto, ControlPoint } from '@material-ui/icons'
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect, Link, useParams } from 'react-router-dom';
 import ShowMoreText from 'react-show-more-text';
 import CustomHome from '../../home/Container/CustomHome';
 import HomeCard from '../../home/Components/HomeCard';
@@ -10,6 +10,7 @@ import Storage from '../../../utility/Storage'
 
 export default function ProfilePage(props) {
 
+    const params = useParams();
     const [posts, setPosts] = useState([])
     const [isLogin, setIsLogin] = useState(true)
     const [userName, setUserName] = useState(null)
@@ -17,19 +18,28 @@ export default function ProfilePage(props) {
     const [userId, setUserId] = useState(null)
     const [message, setMessage] = useState(null)
     const [error, setError] = useState(false)
+    const [user, setUser] = useState(null)
+    const result = Storage.decodeToken('token')
 
     useEffect(() => {
         if (props.token !== null) {
 
             getResponse()
         }
-    })
+    },[result])
 
     const getResponse = async () => {
-        const response = await HttpClient.get('userpost');
-        // console.log(response.posts);
-        // const decodeToken = JSON.parse(atob(props.token.split('.')[1]));
-        const result = Storage.decodeToken('token')
+        // let response = await HttpClient.get('userpost');
+        let response
+
+        // const result = Storage.decodeToken('token')
+        if(result.user_username === params.username){
+            response = await HttpClient.get('userpost');
+            console.log('match');
+        }else{
+            response = await HttpClient.get(`user/${params.username}`);
+            console.log('no match');
+        }
         // console.log(decodeToken);
         setUserName(result.user_username)
         setName(result.user_name)
@@ -39,6 +49,9 @@ export default function ProfilePage(props) {
             setMessage(response.message)
         } else {
             // response.posts.reverse()
+            if(response.user !== undefined){
+                setUser(response.user)
+            }
             setPosts(response.posts)
         }
     }
@@ -59,7 +72,7 @@ export default function ProfilePage(props) {
 
                         <div class="profile-user-settings">
 
-                            <h1 class="profile-user-name">{userName}</h1>
+                            <h1 class="profile-user-name">{user !== null ? user.username : userName}</h1>
 
                             <button class="btn profile-edit-btn">Edit Profile</button>
 
@@ -76,7 +89,7 @@ export default function ProfilePage(props) {
                         <div class="profile-stats">
 
                             <ul className="profile-stats-ul">
-                                <li><span class="profile-stat-count">164</span> posts</li>
+                                <li><span class="profile-stat-count">{posts.length}</span> posts</li>
                                 <li><span class="profile-stat-count">188</span> followers</li>
                                 <li><span class="profile-stat-count">206</span> following</li>
                             </ul>
@@ -85,7 +98,7 @@ export default function ProfilePage(props) {
 
                         <div class="profile-bio">
 
-                            <p><span class="profile-real-name">{name}</span></p>
+                            <p><span class="profile-real-name">{user !== null ? user.name : name}</span></p>
                             <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit 📷✈️🏕️
                             Lorem ipsum dolor sit, amet consectetur adipisicing elit 📷✈️🏕️
                             Lorem ipsum dolor sit, amet consectetur adipisicing elit 📷✈️🏕️
@@ -116,7 +129,7 @@ export default function ProfilePage(props) {
                     <div class="loader"></div>
                     :
                     posts.map((item)=>(
-                        <PostCard userName={userName} post_image={item.post_image} post_description={item.post_description} postId={item._id} userId={userId} likes={item.likes} comments={item.comments}/>
+                        <PostCard userName={user !== null ? user.username : userName} post_image={item.post_image} post_description={item.post_description} postId={item._id} userId={userId} likes={item.likes} comments={item.comments}/>
                     ))
                     : <p>{message}</p>
                 }

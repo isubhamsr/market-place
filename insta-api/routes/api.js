@@ -8,7 +8,7 @@ router.post("/signup",auth.signup)
 router.post("/signin",auth.signin)
 router.post("/protected",middlewares.verifyUser,auth.protected)
 
-router.get("/user",user.user)
+router.get("/user/:username",middlewares.verifyUser,user.otherUserProfile)
 
 router.post("/createpost",middlewares.verifyUser,post.createPosts)
 router.get("/fetchallpost",middlewares.verifyUser,post.fetchAllPosts)

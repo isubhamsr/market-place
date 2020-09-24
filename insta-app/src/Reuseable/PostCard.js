@@ -126,7 +126,7 @@ export default function PostCard({userName, post_image, post_description, postId
                                             post_image !== '' && post_image !== null && post_description !== 'none' ?
                                                 <React.Fragment>
                                                     <div className="post-username">
-                                                        <b>isubhamsr : </b>
+                                                        <b>{userName} : </b>
                                                     </div>
                                                     {/* <div className="description-body"> */}
                                                     <ShowMoreText
