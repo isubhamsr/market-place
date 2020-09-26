@@ -108,7 +108,7 @@ users.fetchAllUser = (req, res) => {
         User.find()
             .select("-password")
             .then(users => {
-                return resstatus(200).json({
+                return res.status(200).json({
                     error : false,
                     users: users
                 })
