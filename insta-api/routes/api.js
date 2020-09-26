@@ -9,6 +9,9 @@ router.post("/signin",auth.signin)
 router.post("/protected",middlewares.verifyUser,auth.protected)
 
 router.get("/user/:username",middlewares.verifyUser,user.otherUserProfile)
+router.put("/follow",middlewares.verifyUser,user.follow)
+router.put("/unfollow",middlewares.verifyUser,user.unfollow)
+router.get("/user",middlewares.verifyUser,user.fetchAllUser)
 
 router.post("/createpost",middlewares.verifyUser,post.createPosts)
 router.get("/fetchallpost",middlewares.verifyUser,post.fetchAllPosts)

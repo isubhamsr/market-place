@@ -19,6 +19,7 @@ export default function ProfilePage(props) {
     const [message, setMessage] = useState(null)
     const [error, setError] = useState(false)
     const [user, setUser] = useState(null)
+    const [isFollow, setIsFollow] = useState(false)
     const result = Storage.decodeToken('token')
 
     useEffect(() => {
@@ -35,10 +36,9 @@ export default function ProfilePage(props) {
         // const result = Storage.decodeToken('token')
         if(result.user_username === params.username){
             response = await HttpClient.get('userpost');
-            console.log('match');
         }else{
+            setIsFollow(true)
             response = await HttpClient.get(`user/${params.username}`);
-            console.log('no match');
         }
         // console.log(decodeToken);
         setUserName(result.user_username)
@@ -73,16 +73,18 @@ export default function ProfilePage(props) {
                         <div class="profile-user-settings">
 
                             <h1 class="profile-user-name">{user !== null ? user.username : userName}</h1>
-
+                            {
+                                isFollow !== true ?
+                                <>
                             <button class="btn profile-edit-btn">Edit Profile</button>
 
                             <button class="btn profile-settings-btn" aria-label="profile settings">
-                                {/* <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-sliders" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M14 3.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0zM11.5 5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM7 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0zM4.5 10a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm9.5 3.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0zM11.5 15a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
-                                    <path fill-rule="evenodd" d="M9.5 4H0V3h9.5v1zM16 4h-2.5V3H16v1zM9.5 14H0v-1h9.5v1zm6.5 0h-2.5v-1H16v1zM6.5 9H16V8H6.5v1zM0 9h2.5V8H0v1z" />
-                                </svg> */}
                                 <Link to='/create'><ControlPoint /></Link>
                             </button>
+                            </>
+                            :
+                            <button class="btn btn-primary profile-edit-btn">Follow</button>
+                            }
 
                         </div>
 

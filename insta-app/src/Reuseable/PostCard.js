@@ -54,8 +54,8 @@ export default function PostCard({userName, post_image, post_description, postId
         <section class="hero">
             <div class="container">
                 <div class="row">
-
-                    <div class="col-lg-6 offset-lg-3">
+                    {/* <div style={{ 'flex': '3 0 50%', 'margin-left': '20%', 'max-width': '75%'}}> */}
+                <div class="col-lg-6 offset-lg-3"> 
                                 <div class="cardbox shadow-lg bg-white">
                                     <div class="cardbox-heading">
                                         <div class="dropdown float-right">
@@ -103,7 +103,7 @@ export default function PostCard({userName, post_image, post_description, postId
                                     <div class="cardbox-base">
                                         <ul class="float-right">
                                             <li><a><i class="fa fa-comments"></i></a></li>
-                                            <li><a><em class="mr-5">12</em></a></li>
+                                            <li><a><em class="mr-5">{comments.length}</em></a></li>
                                             <li><a><i class="fa fa-share-alt"></i></a></li>
                                             <li><a><em class="mr-3">03</em></a></li>
                                         </ul>
@@ -172,8 +172,8 @@ export default function PostCard({userName, post_image, post_description, postId
                                 </div>
 
                     </div>
-                </div>
-            </div>
+                 </div>
+             </div>
         </section>
     )
 }

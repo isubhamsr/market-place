@@ -258,7 +258,24 @@ export default function Backup() {
             }
 
               
-              
+            <section style={{ display: "flex" }}>
+              {
+                allPosts.map((item) => (
+                  <PostCard userName={item.posted_by.username} post_image={item.post_image} post_description={item.post_description} postId={item._id} userId={userId} likes={item.likes} comments={item.comments} />
+                ))
+              }
+            
+            {/* <div class="card" style={{ width: "25rem", 'margin-top': '24px', height: '0%' }}>
+              <div class="card-header">
+                Featured
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Cras justo odio</li>
+                <li class="list-group-item">Dapibus ac facilisis in</li>
+                <li class="list-group-item">Vestibulum at eros</li>
+              </ul>
+            </div> */}
+          </section>
 
 
 
