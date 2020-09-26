@@ -52,8 +52,18 @@ users.follow = (req, res) => {
                     if (error) {
                         return res.status(422).json({ error: true, message: error.message })
                     }
-                    delete result.password
-                    return res.status(200).json({ error: false, message: "Follow", data: result })
+                    User.findByIdAndUpdate(userId, {
+                        $push : {followings: result._id}
+                    }, {
+                        new : true
+                    })
+                    .select("-password")
+                    .exec((error, result) => {
+                        if (error) {
+                            return res.status(422).json({ error: true, message: error.message })
+                        }
+                        return res.status(200).json({ error: false, message: "Follow", data: result })
+                    })
                 })
         } catch (error) {
             return res.status(500).json({
@@ -85,9 +95,18 @@ users.unfollow = (req, res) => {
                     if (error) {
                         return res.status(422).json({ error: true, message: error.message })
                     }
-                    console.log(result.password);
-                    delete result.password
-                    return res.status(200).json({ error: false, message: "Follow", data: result })
+                    User.findByIdAndUpdate(userId, {
+                        $pull : {followings: result._id}
+                    }, {
+                        new : true
+                    })
+                    .select("-password")
+                    .exec((error, result) => {
+                        if (error) {
+                            return res.status(422).json({ error: true, message: error.message })
+                        }
+                        return res.status(200).json({ error: false, message: "Follow", data: result })
+                    })
                 })
         } catch (error) {
             return res.status(500).json({
