@@ -74,6 +74,7 @@ posts.signUserPost = (req, res)=>{
     try {
         Post.find({posted_by:req.user.user_id})
         .populate("comments.posted_by", "_id username")
+        .populate("posted_by", "_id username followers followings")
         .then((posts)=>{
             if(posts.length === 0){
                 return res.status(422).json({ error: true, message: "No Posts are Created by This User" })

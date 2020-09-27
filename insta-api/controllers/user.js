@@ -40,7 +40,6 @@ users.follow = (req, res) => {
     try {
         const username = req.body.username
         const userId = req.user.user_id
-        console.log(username);
         try {
             User.findOneAndUpdate({ username: username }, {
                 $push: { followers: userId }
@@ -83,7 +82,6 @@ users.unfollow = (req, res) => {
     try {
         const username = req.body.username
         const userId = req.user.user_id
-        console.log(username);
         try {
             User.findOneAndUpdate({ username: username }, {
                 $pull: { followers: userId }
