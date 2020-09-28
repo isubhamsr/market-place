@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 const Post = mongoose.model("Post")
+const User = mongoose.model("User")
 
 let posts = {}
 
@@ -72,22 +73,32 @@ posts.fetchAllPosts = (req,res)=>{
 
 posts.fetchFollowUsersPosts = (req,res)=>{
     try {
-        Post.find({posted_by:{$in:req.user.user_followings}})
-        .populate("posted_by comments.posted_by", "_id username")
-        .then((posts)=>{
-            posts.reverse()
-            return res.status(200).json({
-                error: false,
-                message: "Fetch Following User's Posts",
-                posts : posts
+        User.findById(req.user.user_id)
+            .select("-password")
+            .then(user => {
+                Post.find({posted_by:{$in:user.followings}})
+                .populate("posted_by comments.posted_by", "_id username")
+                .then((posts)=>{
+                    posts.reverse()
+                    if(posts.length === 0){
+                        return res.status(404).json({
+                            error : true,
+                            message : 'Your are not following anyone'
+                        })
+                    }
+                    return res.status(200).json({
+                        error: false,
+                        message: "Fetch Following User's Posts",
+                        posts : posts
+                    })
+                })
+                .catch((error)=>{
+                    return res.status(500).json({
+                        error: true,
+                        message: error.message
+                    })
+                })
             })
-        })
-        .catch((error)=>{
-            return res.status(500).json({
-                error: true,
-                message: error.message
-            })
-        })
     } catch (error) {
         return res.status(500).json({
             error: true,

@@ -40,9 +40,7 @@ auth.signup = (req, res) => {
                                     user_id: user._id,
                                     user_name: user.name,
                                     user_username: user.username,
-                                    user_email: user.email,
-                                    user_followers: user.followers,
-                                    user_followings: user.followings
+                                    user_email: user.email
                                 }, process.env.SUPER_SECRET_KEY);
                                 return res.status(200).json({ error: false, message: "Signup Success", token: token })
                             })
@@ -87,9 +85,7 @@ auth.signin = (req, res) => {
                         user_id: user._id,
                         user_name: user.name,
                         user_username: user.username,
-                        user_email: user.email,
-                        user_followers: user.followers,
-                        user_followings: user.followings
+                        user_email: user.email
                     }, process.env.SUPER_SECRET_KEY);
                     return res.status(200).json({ error: false, message: "Signin Success", token: token })
                 } else {

@@ -57,7 +57,7 @@ export default function ProfilePage(props) {
             // response.posts.reverse()
             if (response.user !== undefined) {
                 setUser(response.user)
-                if(response.user.followers.includes(result.user_id)){
+                if (response.user.followers.includes(result.user_id)) {
                     // console.log('yes');
                     setIsFollow(true)
                 }
@@ -126,15 +126,18 @@ export default function ProfilePage(props) {
                                     </>
                                     :
                                     isLoading !== true ?
-                                    <button class={followRes!== null || isFollow === true? "btn btn-light profile-edit-btn" :"btn btn-primary profile-edit-btn"} onClick={ isFollow === true ? doUnFollow : doFollow}>
-                                        {isFollow === true ? 'Unfollow'
+                                        <button className={followRes !== null || isFollow === true ? "btn btn-light profile-edit-btn" : "btn btn-primary profile-edit-btn"} onClick={isFollow === true ? doUnFollow : doFollow}>
+                                            {isFollow === true ? 'Unfollow'
+                                                :
+                                                'Follow'
+                                            }
+                                        </button>
                                         :
-                                            'Follow'
-                                        }
-                                    </button>
-                                    : <CircularProgress />
+                                        <button className="btn profile-edit-btn">
+                                            <CircularProgress size={20}/>
+                                        </button>
                             }
-                                        {/* <div class="spinner-border text-light" role="status">
+                            {/* <div class="spinner-border text-light" role="status">
                                             <span class="sr-only spinner-border text-light">Loading...</span>
                                         </div> */}
 
@@ -150,7 +153,7 @@ export default function ProfilePage(props) {
                                             <li><span class="profile-stat-count">{user.followers.length}</span> followers</li>
                                             <li><span class="profile-stat-count">{user.followings.length}</span> following</li>
                                         </>
-                                        : 
+                                        :
                                         <>
                                             <li><span class="profile-stat-count">{posts.length !== 0 ? posts[0].posted_by.followers.length : "0"}</span> followers</li>
                                             <li><span class="profile-stat-count">{posts.length !== 0 ? posts[0].posted_by.followings.length : "0"}</span> following</li>
