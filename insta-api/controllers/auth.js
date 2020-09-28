@@ -13,7 +13,7 @@ auth.signup = (req, res) => {
         if (!name || !username || !email || !password) {
             return res.status(422).json({ error: true, message: "All Fields are require" })
         }
-        
+
         User.findOne({ email: email })
             .then((emailId) => {
                 if (emailId) {
@@ -28,20 +28,22 @@ auth.signup = (req, res) => {
                         const salt = bcrypt.genSaltSync(parseInt(process.env.SALT_Rounds));
                         const hash = bcrypt.hashSync(password, salt);
                         const user = new User({
-                            name : name,
-                            username : username,
-                            email : email,
-                            password : hash
+                            name: name,
+                            username: username,
+                            email: email,
+                            password: hash
                         })
 
                         user.save()
                             .then((user) => {
-                                const token = jwt.sign({ 
-                                    user_id : user._id,
-                                    user_name : user.name,
-                                    user_username : user.username,
-                                    user_email : user.email
-                                 }, process.env.SUPER_SECRET_KEY);
+                                const token = jwt.sign({
+                                    user_id: user._id,
+                                    user_name: user.name,
+                                    user_username: user.username,
+                                    user_email: user.email,
+                                    user_followers: user.followers,
+                                    user_followings: user.followings
+                                }, process.env.SUPER_SECRET_KEY);
                                 return res.status(200).json({ error: false, message: "Signup Success", token: token })
                             })
                             .catch((error) => {
@@ -68,34 +70,36 @@ auth.signin = (req, res) => {
     try {
         const { username, password } = req.body
 
-        if(!username, !password){
+        if (!username, !password) {
             return res.status(422).json({ error: true, message: "All Fields are require" })
         }
 
-        User.findOne({username:username})
-        .then((user)=>{
-            // console.log(user);
-            // console.log(Object.keys(user).length);
-            if(user === null){
-                return res.status(422).json({error: true, message:"No User Found Please Sign Up or Wrong Username"})
-            }
-            const isPassword = bcrypt.compareSync(password, user.password); 
-            if(isPassword){
-                const token = jwt.sign({ 
-                    user_id : user._id,
-                    user_name : user.name,
-                    user_username : user.username,
-                    user_email : user.email
-                 }, process.env.SUPER_SECRET_KEY);
-                return res.status(200).json({error : false, message: "Signin Success", token: token})
-            }else{
-                return res.status(422).json({error: true, message:"Wrong Password"})
-            }
-            
-        })
-        .catch((error)=>{
-            return res.status(422).json({error: true, message:"Internal Server Error, Please Try Again"})
-        })
+        User.findOne({ username: username })
+            .then((user) => {
+                // console.log(user);
+                // console.log(Object.keys(user).length);
+                if (user === null) {
+                    return res.status(422).json({ error: true, message: "No User Found Please Sign Up or Wrong Username" })
+                }
+                const isPassword = bcrypt.compareSync(password, user.password);
+                if (isPassword) {
+                    const token = jwt.sign({
+                        user_id: user._id,
+                        user_name: user.name,
+                        user_username: user.username,
+                        user_email: user.email,
+                        user_followers: user.followers,
+                        user_followings: user.followings
+                    }, process.env.SUPER_SECRET_KEY);
+                    return res.status(200).json({ error: false, message: "Signin Success", token: token })
+                } else {
+                    return res.status(422).json({ error: true, message: "Wrong Password" })
+                }
+
+            })
+            .catch((error) => {
+                return res.status(422).json({ error: true, message: "Internal Server Error, Please Try Again" })
+            })
     } catch (error) {
         res.status(500).json({
             err: true,
@@ -105,7 +109,7 @@ auth.signin = (req, res) => {
 
 }
 
-auth.protected = (req,res) =>{
+auth.protected = (req, res) => {
     res.send("protected")
 }
 

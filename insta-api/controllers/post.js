@@ -70,6 +70,32 @@ posts.fetchAllPosts = (req,res)=>{
     }
 }
 
+posts.fetchFollowUsersPosts = (req,res)=>{
+    try {
+        Post.find({posted_by:{$in:req.user.user_followings}})
+        .populate("posted_by comments.posted_by", "_id username")
+        .then((posts)=>{
+            posts.reverse()
+            return res.status(200).json({
+                error: false,
+                message: "Fetch Posts",
+                posts : posts
+            })
+        })
+        .catch((error)=>{
+            return res.status(500).json({
+                error: true,
+                message: error.message
+            })
+        })
+    } catch (error) {
+        return res.status(500).json({
+            error: true,
+            message: error.message
+        })
+    }
+}
+
 posts.signUserPost = (req, res)=>{
     try {
         Post.find({posted_by:req.user.user_id})

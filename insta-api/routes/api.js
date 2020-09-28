@@ -15,6 +15,7 @@ router.get("/user",middlewares.verifyUser,user.fetchAllUser)
 
 router.post("/createpost",middlewares.verifyUser,post.createPosts)
 router.get("/fetchallpost",middlewares.verifyUser,post.fetchAllPosts)
+router.get("/fetchfollowusersposts",middlewares.verifyUser,post.fetchFollowUsersPosts)
 router.get("/userpost",middlewares.verifyUser,post.signUserPost)
 router.put("/like",middlewares.verifyUser,post.likePost)
 router.put("/unlike",middlewares.verifyUser,post.unLikePost)
