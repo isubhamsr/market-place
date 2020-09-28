@@ -9,7 +9,7 @@ export default function CustomLayout(props) {
     const [log_out, setLogout] = useState(false)
     const [isLogin, setIsLogin] = useState(false)
     const [username, setUsername] = useState(null)
-    const {state, dispatch, signupState, signupdispatch} = useContext(GlobalContext)
+    const { state, dispatch, signupState, signupdispatch } = useContext(GlobalContext)
     // console.log(state);
     // console.log(signupState);
     const history = useHistory()
@@ -19,8 +19,8 @@ export default function CustomLayout(props) {
 
         if (token != null) {
             const decodeToken = JSON.parse(atob(token.split('.')[1]));
-        // console.log(decodeToken);
-        setUsername(decodeToken.user_username)
+            // console.log(decodeToken);
+            setUsername(decodeToken.user_username)
             setToken(token)
         }
 
@@ -30,7 +30,7 @@ export default function CustomLayout(props) {
 
         // console.log(state);
 
-        if(log_out){
+        if (log_out) {
             history.push('/signin')
         }
 
@@ -74,10 +74,14 @@ export default function CustomLayout(props) {
                                         {/* <Link class="nav-link" to="/profile">Profile</Link>
 
                                 <div class="dropdown float-right"> */}
-                                <Link to='/create'><ControlPoint /></Link>
+                                        <Link to='/followingpost' style={{
+                                            'margin-right': '20px',
+                                            'color': 'black'
+                                        }}>Following User's Post</Link>
+                                        <Link to='/create'><ControlPoint /></Link>
                                         <button class="btn btn-flat btn-flat-icon" type="button" data-toggle="dropdown" aria-expanded="false">
                                             <div class="d-flex mr-3">
-                                                
+
                                                 <a href=""><img class="img-fluid rounded-circle" height={30} width={30} src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/4.jpg" alt="User" /></a>
                                             </div>
                                         </button>
@@ -105,6 +109,6 @@ export default function CustomLayout(props) {
                     <span class="text-muted">Place sticky footer content here.</span>
                 </div>
             </footer>
-        </React.Fragment>
+        </React.Fragment >
     )
 }

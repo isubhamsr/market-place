@@ -10,6 +10,6 @@ export default function CustomHome(props) {
     if(token === null){
         return (<Redirect to='/signin'/>)
     }else{
-        return (<HomeCard token={token} />)
+        return (<HomeCard token={token} page={props.page}/>)
     }
 }

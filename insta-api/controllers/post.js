@@ -78,7 +78,7 @@ posts.fetchFollowUsersPosts = (req,res)=>{
             posts.reverse()
             return res.status(200).json({
                 error: false,
-                message: "Fetch Posts",
+                message: "Fetch Following User's Posts",
                 posts : posts
             })
         })

@@ -23,8 +23,13 @@ export default function HomeCard(props) {
   })
 
   const getResponse = async () => {
-    const response = await HttpClient.get('fetchallpost');
+    let response 
     const result = Storage.decodeToken('token')
+    if(props.page === 'home'){
+      response = await HttpClient.get('fetchallpost');
+    }else{
+      response = await HttpClient.get('fetchfollowusersposts');
+    }
     setUserId(result.user_id)
     if (response.error === true) {
       setError(true)

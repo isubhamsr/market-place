@@ -9,7 +9,8 @@ export default function BaseRoute() {
 
     return (
         <div>
-            <Route exact path="/" component={CustomHome} />
+            <Route exact path="/" component={() => (<CustomHome page="home" />)} />
+            <Route exact path="/followingpost" component={() => (<CustomHome page="followuser" />)} />
             <Route path="/signin" component={() => (<CustomForm page="signin" />)} />
             <Route path="/signup" component={() => (<CustomForm page="signup" />)} />
             <Route path="/profile/:username" component={CustomProfile} />
