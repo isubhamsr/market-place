@@ -28,6 +28,7 @@ app.use(express.urlencoded({ extended: true }))
 // register the model schema
 require("./model/userModel")
 require("./model/postModel")
+require("./model/userDetailsModel")
 
 // import routes
 const apiRoute = require("./routes/api")
