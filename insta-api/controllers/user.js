@@ -162,7 +162,7 @@ users.fetchAllUser = (req, res) => {
 users.addUserDetails = (req, res) => {
     try {
         const userId = req.user.user_id
-        const { profile_photo, bio, business_type, address, phone_number } = req.body
+        const { profile_photo, bio, business_type, address, phone_number, website, gender } = req.body
         try {
             const userDetails = new UserDetails({
                 profile_photo: profile_photo,
@@ -170,6 +170,8 @@ users.addUserDetails = (req, res) => {
                 business_type: business_type,
                 address: address,
                 phone_number: phone_number,
+                website : website,
+                gender : gender,
                 posted_by: userId
             })
             userDetails.save()

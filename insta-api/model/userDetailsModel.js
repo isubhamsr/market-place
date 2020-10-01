@@ -22,6 +22,14 @@ const userDetailsSchema = new mongoose.Schema({
         type : String,
         default : ""
     },
+    website : {
+        type : String,
+        default : ""
+    },
+    gender : {
+        type : String,
+        default : ""
+    },
     posted_by : {
         type : ObjectId,
         ref : "User"

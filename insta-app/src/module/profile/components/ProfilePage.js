@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import HttpClient from '../../../utility/HttpClient'
 import { AddAPhoto, ControlPoint } from '@material-ui/icons'
-import { Redirect, Link, useParams } from 'react-router-dom';
+import { Redirect, Link, useParams, NavLink } from 'react-router-dom';
 import ShowMoreText from 'react-show-more-text';
 import CustomHome from '../../home/Container/CustomHome';
 import HomeCard from '../../home/Components/HomeCard';
@@ -118,7 +118,7 @@ export default function ProfilePage(props) {
                             {
                                 otherUser !== true ?
                                     <>
-                                        <button class="btn profile-edit-btn">Edit Profile</button>
+                                        <Link to="/edit" class="btn profile-edit-btn">Edit Profile</Link>
 
                                         <button class="btn profile-settings-btn" aria-label="profile settings">
                                             <Link to='/create'><ControlPoint /></Link>
