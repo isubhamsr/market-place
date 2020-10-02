@@ -254,4 +254,30 @@ users.fetchOtherUserDetails = (req, res) => {
     }
 }
 
+users.updateProfilePhoto = (req,res) =>{
+    try {
+        const userId = req.user.user_id
+        const profilePhoto = req.body.profile_photo
+        User.findByIdAndUpdate(userId,{$set:{profile_photo:profilePhoto}},{new:true},
+            (error,result)=>{
+             if(error){
+                 return res.status(422).json({
+                     error: true,
+                     message : error.message
+                    })
+             }
+             return res.status(200).json({
+                 error : false,
+                 masssage : "Profile Photo Updated Sussesfully",
+                 data : result
+             })
+        })
+    } catch (error) {
+        return res.status(500).json({
+            error: true,
+            message: "Internal Server Error, Please Try Again"
+        })
+    }
+}
+
 module.exports = users;

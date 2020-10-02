@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema({
         type : String,
         required : true
     },
+    profile_photo : {
+        type : String,
+        default : ""
+    },
     followers:[{type: ObjectId, ref: "User"}],
     followings:[{type: ObjectId, ref: "User"}],
 })

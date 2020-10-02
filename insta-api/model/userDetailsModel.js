@@ -2,10 +2,6 @@ const mongoose = require("mongoose")
 const { ObjectId } = mongoose.Schema.Types
 
 const userDetailsSchema = new mongoose.Schema({
-    profile_photo : {
-        type : String,
-        default : ""
-    },
     bio : {
         type : String,
         default : ""

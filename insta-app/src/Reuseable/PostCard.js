@@ -5,11 +5,11 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import HttpClient from '../utility/HttpClient'
 
-export default function PostCard({userName, post_image, post_description, postId, userId, likes, comments}) {
+export default function PostCard({userName, post_image, post_description, postId, userId, likes, comments, profilePhoto}) {
 
     const [isLike, setIsLike] = useState(false)
     const [comment, setComment] = useState(null)
-
+    const avtar = `https://ui-avatars.com/api/?name=${userName}&size=210` 
     useEffect(()=>{
         // console.log(userId);
         // console.log(likes);
@@ -70,7 +70,7 @@ export default function PostCard({userName, post_image, post_description, postId
                                         </div>
                                         <Link class="media m-0" to={`/profile/${userName}`}>
                                             <div class="d-flex mr-3">
-                                                <img class="img-fluid rounded-circle" src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/4.jpg" alt="User" />
+                                                <img class="img-fluid rounded-circle" src={profilePhoto !== "" ? profilePhoto : avtar} alt="User" />
                                             </div>
                                             <div class="media-body">
                                                 <p class="m-0">{userName}</p>
@@ -162,7 +162,7 @@ export default function PostCard({userName, post_image, post_description, postId
                                     <div class="cardbox-comments">
                                         <div>
                                             <span class="comment-avatar">
-                                                <a href=""><img class="rounded-circle" src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/6.jpg" alt="..." /></a>
+                                                <a href=""><img class="rounded-circle" src={profilePhoto !== "" ? profilePhoto : avtar} alt="..." /></a>
                                             </span>
                                         </div>
                                         <div class="search">

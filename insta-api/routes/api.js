@@ -15,6 +15,7 @@ router.get("/user",middlewares.verifyUser,user.fetchAllUser)
 router.post("/adduserdetails",middlewares.verifyUser,user.addUserDetails)
 router.get("/fetchsigninuserdetails",middlewares.verifyUser,user.fetchSigninUserDetails)
 router.get("/fetchotheruserdetails/:username",middlewares.verifyUser,user.fetchOtherUserDetails)
+router.put("/updateprofilephoto",middlewares.verifyUser,user.updateProfilePhoto)
 
 router.post("/createpost",middlewares.verifyUser,post.createPosts)
 router.get("/fetchallpost",middlewares.verifyUser,post.fetchAllPosts)

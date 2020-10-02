@@ -21,6 +21,7 @@ export default function ProfilePage(props) {
     const [error, setError] = useState(false)
     const [user, setUser] = useState(null)
     const [otherUser, setOtherUser] = useState(false)
+    const [signInUser, setSignInUser] = useState(false)
     const [isFollow, setIsFollow] = useState(false)
     const [followRes, setFollowRes] = useState(null)
     const [unFollowRes, setUnFollowRes] = useState(null)
@@ -41,7 +42,7 @@ export default function ProfilePage(props) {
         // const result = Storage.decodeToken('token')
         if (result.user_username === params.username) {
             response = await HttpClient.get('userpost');
-            console.log(response);
+            setSignInUser(true)
         } else {
             setOtherUser(true)
             response = await HttpClient.get(`user/${params.username}`);
@@ -107,8 +108,46 @@ export default function ProfilePage(props) {
                     <div class="profile">
 
                         <div class="profile-image">
-
-                            <img src="http://res.cloudinary.com/dkcwzsz7t/image/upload/v1598457071/kcukgc0e3m06phtg6lji.jpg" alt="" />
+                            {/* {
+                                posts.length !== 0 ?
+                                    posts[0].posted_by.profile_photo === "" ?
+                                        <img src={`https://ui-avatars.com/api/?name=${name}&size=210`} alt="" />
+                                        : <img src={posts[0].posted_by.profile_photo} alt="" />
+                                    : user !== null ? 
+                                        user.profile_photo === "" ?
+                                            <img src={`https://ui-avatars.com/api/?name=${user.name}&size=220`} alt="" />
+                                            : <img src={`https://ui-avatars.com/api/?name=${user.profile_photo}&size=220`} alt="" />
+                                        : "Loading"
+                            } */}
+                            {
+                                posts.length !== 0 && signInUser ?
+                                    posts[0].posted_by.profile_photo === "" ?
+                                        <img src={`https://ui-avatars.com/api/?name=${userName}&size=210`} alt="" />
+                                        : <img src={posts[0].posted_by.profile_photo} alt="" style={{ 'width': '35vh', 'height': '35vh' }} />
+                                    : user !== null ? 
+                                        user.profile_photo === "" ?
+                                            <img src={`https://ui-avatars.com/api/?name=${user.username}&size=210`} alt="" />
+                                            : <img src={`https://ui-avatars.com/api/?name=${user.profile_photo}&size=210`} alt="" style={{ 'width': '35vh', 'height': '35vh' }} />
+                                        : "Loading"
+                            }
+                            {/* {
+                                posts.length !== 0 ?
+                                    posts[0].posted_by.profile_photo === "" ?
+                                        <img src={`https://ui-avatars.com/api/?name=${name}&size=210`} alt="" />
+                                        : <img src={posts[0].posted_by.profile_photo} alt="" />
+                                    : "Loading"
+                            }  */}
+                            {/* {
+                                user !== undefined ? 
+                                        user.profile_photo === "" ?
+                                            <img src={`https://ui-avatars.com/api/?name=${user.name}&size=220`} alt="" />
+                                            : <img src={`https://ui-avatars.com/api/?name=${user.profile_photo}&size=220`} alt="" />
+                                        : "Loading"
+                            } */}
+                                    {/* user.profile_photo === "" ?
+                                        <img src={`https://ui-avatars.com/api/?name=${user.name}&size=220`} alt="" />
+                                        : <img src={`https://ui-avatars.com/api/?name=${user.profile_photo}&size=220`} alt="" /> */}
+                            {/* <img src={posts.length === 0 ? "loading" : posts[0].posted_by.profile_photo === "" || user.profile_photo === "" ? `https://ui-avatars.com/api/?name=${name}&size=220` : posts[0].posted_by.profile_photo} alt="" /> */}
 
                         </div>
 
@@ -186,7 +225,7 @@ export default function ProfilePage(props) {
                         <div class="loader"></div>
                         :
                         posts.map((item) => (
-                            <PostCard userName={user !== null ? user.username : userName} post_image={item.post_image} post_description={item.post_description} postId={item._id} userId={userId} likes={item.likes} comments={item.comments} />
+                            <PostCard userName={user !== null ? user.username : userName} post_image={item.post_image} post_description={item.post_description} postId={item._id} userId={userId} likes={item.likes} comments={item.comments} profilePhoto={item.posted_by.profile_photo}/>
                         ))
                     : <p>{message}</p>
                 }
